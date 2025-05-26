@@ -1,9 +1,12 @@
 package isel.sisinf.model;
 
+import isel.sisinf.model.interfaces.IEmployee;
+
+import java.io.Serializable;
 import java.util.Objects;
 
 
-public class Employee {
+public class Employee implements IEmployee {
 
     private int number;
     private Person person;
@@ -17,10 +20,13 @@ public class Employee {
     }
 
     // Getters and Setters
+    @Override
     public int getNumber() { return number; }
+    @Override
     public void setNumber(int number) { this.number = number; }
-
+    @Override
     public Person getPerson() { return person; }
+    @Override
     public void setPerson(Person person) { this.person = person; }
 
     // Utils

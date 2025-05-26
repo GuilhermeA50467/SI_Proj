@@ -1,9 +1,11 @@
 package isel.sisinf.model;
 
+import isel.sisinf.model.interfaces.IDock;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Dock {
+public class Dock implements IDock {
 
     private int number;
     private Station station;
@@ -23,19 +25,25 @@ public class Dock {
     }
 
     // Getters e setters
+    @Override
     public int getNumber() { return number; }
+    @Override
     public void setNumber(int number) { this.number = number; }
-
+    @Override
     public Station getStation() { return station; }
+    @Override
     public void setStation(Station station) { this.station = station; }
-
+    @Override
     public String getState() { return state; }
+    @Override
     public void setState(String state) { this.state = state; }
-
+    @Override
     public Scooter getScooter() { return scooter; }
+    @Override
     public void setScooter(Scooter scooter) { this.scooter = scooter; }
-
+    @Override
     public LocalDateTime getVersion() { return version; }
+    @Override
     public void setVersion(LocalDateTime version) { this.version = version; }
 
     @Override

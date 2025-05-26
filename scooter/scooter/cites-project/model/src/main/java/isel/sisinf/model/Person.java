@@ -1,6 +1,7 @@
 package isel.sisinf.model;
 
 
+import isel.sisinf.model.interfaces.IPerson;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -8,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "PERSON")
-public class Person {
+public class Person implements IPerson {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,16 +36,21 @@ public class Person {
     }
 
     // Getters and Setters
+    @Override
     public int getId() { return id; }
+    @Override
     public void setId(int id) { this.id = id; }
-
+    @Override
     public String getEmail() { return email; }
+    @Override
     public void setEmail(String email) { this.email = email; }
-
+    @Override
     public Integer getTaxNumber() { return taxNumber; }
+    @Override
     public void setTaxNumber(Integer taxNumber) { this.taxNumber = taxNumber; }
-
+    @Override
     public String getName() { return name; }
+    @Override
     public void setName(String name) { this.name = name; }
 
     // Utility methods

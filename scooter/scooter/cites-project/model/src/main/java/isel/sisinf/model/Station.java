@@ -1,10 +1,12 @@
 package isel.sisinf.model;
 
 
+import isel.sisinf.model.interfaces.IStation;
+
 import java.util.Objects;
 
 
-public class Station {
+public class Station implements IStation {
 
     private int id;
     private double latitude;
@@ -20,13 +22,17 @@ public class Station {
     }
 
     // Getters and Setters
+    @Override
     public int getId() { return id; }
+    @Override
     public void setId(int id) { this.id = id; }
-
+    @Override
     public double getLatitude() { return latitude; }
+    @Override
     public void setLatitude(double latitude) { this.latitude = latitude; }
-
+    @Override
     public double getLongitude() { return longitude; }
+    @Override
     public void setLongitude(double longitude) { this.longitude = longitude; }
 
     // Utils

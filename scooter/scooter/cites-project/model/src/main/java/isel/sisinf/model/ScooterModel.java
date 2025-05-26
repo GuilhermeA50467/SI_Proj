@@ -1,11 +1,14 @@
 package isel.sisinf.model;
 
+import isel.sisinf.model.interfaces.IScooterModel;
 import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "SCOOTERMODEL")
-public class ScooterModel {
+public class ScooterModel implements IScooterModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,13 +31,17 @@ public class ScooterModel {
     }
 
     // Getters and setters
+    @Override
     public int getNumber() { return number; }
+    @Override
     public void setNumber(int number) { this.number = number; }
-
+    @Override
     public String getDesignation() { return designation; }
+    @Override
     public void setDesignation(String designation) { this.designation = designation; }
-
+    @Override
     public int getAutonomy() { return autonomy; }
+    @Override
     public void setAutonomy(int autonomy) { this.autonomy = autonomy; }
 
     // Utils

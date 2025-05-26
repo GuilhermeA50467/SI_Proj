@@ -1,11 +1,14 @@
 package isel.sisinf.model;
 
 
+import isel.sisinf.model.interfaces.ITravel;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 
-public class Travel {
+public class Travel implements ITravel {
 
     private LocalDateTime dinitial;
     private String comment;
@@ -29,70 +32,38 @@ public class Travel {
         this.stinitial = stinitial;
         this.stfinal = stfinal;
     }
-
-    public LocalDateTime getDinitial() {
-        return dinitial;
-    }
-
-    public void setDinitial(LocalDateTime dinitial) {
-        this.dinitial = dinitial;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public Integer getEvaluation() {
-        return evaluation;
-    }
-
-    public void setEvaluation(Integer evaluation) {
-        this.evaluation = evaluation;
-    }
-
-    public LocalDateTime getDfinal() {
-        return dfinal;
-    }
-
-    public void setDfinal(LocalDateTime dfinal) {
-        this.dfinal = dfinal;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Scooter getScooter() {
-        return scooter;
-    }
-
-    public void setScooter(Scooter scooter) {
-        this.scooter = scooter;
-    }
-
-    public Station getStinitial() {
-        return stinitial;
-    }
-
-    public void setStinitial(Station stinitial) {
-        this.stinitial = stinitial;
-    }
-
-    public Station getStfinal() {
-        return stfinal;
-    }
-
-    public void setStfinal(Station stfinal) {
-        this.stfinal = stfinal;
-    }
+    @Override
+    public LocalDateTime getDinitial() {return dinitial;}
+    @Override
+    public void setDinitial(LocalDateTime dinitial) {this.dinitial = dinitial;}
+    @Override
+    public String getComment() {return comment;}
+    @Override
+    public void setComment(String comment) {this.comment = comment;}
+    @Override
+    public Integer getEvaluation() {return evaluation;}
+    @Override
+    public void setEvaluation(Integer evaluation) {this.evaluation = evaluation;}
+    @Override
+    public LocalDateTime getDfinal() {return dfinal;}
+    @Override
+    public void setDfinal(LocalDateTime dfinal) {this.dfinal = dfinal;}
+    @Override
+    public Client getClient() {return client;}
+    @Override
+    public void setClient(Client client) {this.client = client;}
+    @Override
+    public Scooter getScooter() {return scooter;}
+    @Override
+    public void setScooter(Scooter scooter) {this.scooter = scooter;}
+    @Override
+    public Station getStinitial() {return stinitial; }
+    @Override
+    public void setStinitial(Station stinitial) {this.stinitial = stinitial;}
+    @Override
+    public Station getStfinal() {return stfinal;}
+    @Override
+    public void setStfinal(Station stfinal) {this.stfinal = stfinal;}
 
     @Override
     public String toString() {

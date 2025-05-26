@@ -1,10 +1,12 @@
 package isel.sisinf.model;
 
 
+import isel.sisinf.model.interfaces.IServiceCost;
+
 import java.util.Objects;
 
 
-public class ServiceCost {
+public class ServiceCost implements IServiceCost {
 
     private double unlock;
     private double usable;
@@ -15,19 +17,19 @@ public class ServiceCost {
         this.unlock = unlock;
         this.usable = usable;
     }
-
+    @Override
     public double getUnlock() {
         return unlock;
     }
-
+    @Override
     public void setUnlock(double unlock) {
         this.unlock = unlock;
     }
-
+    @Override
     public double getUsable() {
         return usable;
     }
-
+    @Override
     public void setUsable(double usable) {
         this.usable = usable;
     }

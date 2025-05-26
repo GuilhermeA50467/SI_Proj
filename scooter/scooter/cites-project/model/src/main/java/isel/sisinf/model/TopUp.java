@@ -1,11 +1,13 @@
 package isel.sisinf.model;
 
 
+import isel.sisinf.model.interfaces.ITopUp;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 
-public class TopUp {
+public class TopUp implements ITopUp {
 
     private LocalDateTime dttopup;
     private Card card;
@@ -19,26 +21,27 @@ public class TopUp {
         this.value = value;
     }
 
+    @Override
     public LocalDateTime getDttopup() {
         return dttopup;
     }
-
+    @Override
     public void setDttopup(LocalDateTime dttopup) {
         this.dttopup = dttopup;
     }
-
+    @Override
     public Card getCard() {
         return card;
     }
-
+    @Override
     public void setCard(Card card) {
         this.card = card;
     }
-
+    @Override
     public double getValue() {
         return value;
     }
-
+    @Override
     public void setValue(double value) {
         this.value = value;
     }

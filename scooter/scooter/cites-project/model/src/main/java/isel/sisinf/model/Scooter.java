@@ -1,6 +1,7 @@
 package isel.sisinf.model;
 
 
+import isel.sisinf.model.interfaces.IScooter;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -8,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "SCOOTER")
-public class Scooter {
+public class Scooter implements IScooter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,23 +43,29 @@ public class Scooter {
     }
 
     // Getters and setters
+    @Override
     public int getId() { return id; }
+    @Override
     public void setId(int id) { this.id = id; }
-
+    @Override
     public double getWeight() { return weight; }
+    @Override
     public void setWeight(double weight) { this.weight = weight; }
-
+    @Override
     public double getMaxVelocity() { return maxVelocity; }
+    @Override
     public void setMaxVelocity(double maxVelocity) { this.maxVelocity = maxVelocity; }
-
+    @Override
     public int getBattery() { return battery; }
+    @Override
     public void setBattery(int battery) { this.battery = battery; }
-
+    @Override
     public ScooterModel getModel() { return model; }
+    @Override
     public void setModel(ScooterModel model) { this.model = model; }
-
+    @Override
     public LocalDateTime getVersion() { return version; }
-
+    @Override
     public void setVersion(LocalDateTime version) { this.version = version; }
 
     @Override

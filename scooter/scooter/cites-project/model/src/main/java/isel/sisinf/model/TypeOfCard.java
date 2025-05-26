@@ -1,10 +1,12 @@
 package isel.sisinf.model;
 
 
+import isel.sisinf.model.interfaces.ITypeOfCard;
+
 import java.util.Objects;
 
 
-public class TypeOfCard {
+public class TypeOfCard implements ITypeOfCard {
 
     private String reference;
     private int nodays;
@@ -20,13 +22,17 @@ public class TypeOfCard {
     }
 
     // Getters and Setters
+    @Override
     public String getReference() { return reference; }
+    @Override
     public void setReference(String reference) { this.reference = reference; }
-
+    @Override
     public int getNodays() { return nodays; }
+    @Override
     public void setNodays(int nodays) { this.nodays = nodays; }
-
+    @Override
     public double getPrice() { return price; }
+    @Override
     public void setPrice(double price) { this.price = price; }
 
     // Utility methods

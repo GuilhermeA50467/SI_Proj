@@ -1,11 +1,13 @@
 package isel.sisinf.model;
 
 
+import isel.sisinf.model.interfaces.IRider;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 
-public class Rider {
+public class Rider implements IRider {
 
     private int id;
     private String email;
@@ -30,29 +32,37 @@ public class Rider {
     }
 
     // Getters and setters
-
+    @Override
     public int getId() { return id; }
+    @Override
     public void setId(int id) { this.id = id; }
-
+    @Override
     public String getEmail() { return email; }
+    @Override
     public void setEmail(String email) { this.email = email; }
-
+    @Override
     public int getTaxnumber() { return taxnumber; }
+    @Override
     public void setTaxnumber(int taxnumber) { this.taxnumber = taxnumber; }
-
+    @Override
     public String getName() { return name; }
+    @Override
     public void setName(String name) { this.name = name; }
-
+    @Override
     public LocalDateTime getDtregister() { return dtregister; }
+    @Override
     public void setDtregister(LocalDateTime dtregister) { this.dtregister = dtregister; }
-
+    @Override
     public int getCardid() { return cardid; }
+    @Override
     public void setCardid(int cardid) { this.cardid = cardid; }
-
+    @Override
     public double getCredit() { return credit; }
+    @Override
     public void setCredit(double credit) { this.credit = credit; }
-
+    @Override
     public String getTypeofcard() { return typeofcard; }
+    @Override
     public void setTypeofcard(String typeofcard) { this.typeofcard = typeofcard; }
 
     @Override

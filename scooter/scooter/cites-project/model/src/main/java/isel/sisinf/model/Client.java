@@ -1,4 +1,5 @@
 package isel.sisinf.model;
+import isel.sisinf.model.interfaces.IClient;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -25,14 +26,12 @@ public class Client implements IClient {
     }
 
     // Getters and Setters
+    @Override
     public Person getPerson() { return person; }
-
+    @Override
     public void setPerson(Person person) { this.person = person;}
-
     @Override
     public LocalDateTime getDtRegister(){ return dtRegister; }
-
-
     @Override
     public void setDtRegister(LocalDateTime dtRegister) { this.dtRegister = dtRegister; }
 

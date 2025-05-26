@@ -1,8 +1,10 @@
 package isel.sisinf.model;
 
+import isel.sisinf.model.interfaces.ICard;
+
 import java.util.Objects;
 
-public class Card {
+public class Card implements ICard {
 
     private int id;
     private double credit;
@@ -20,16 +22,21 @@ public class Card {
     }
 
     // Getters and Setters
+    @Override
     public int getId() { return id; }
+    @Override
     public void setId(int id) { this.id = id; }
-
+    @Override
     public double getCredit() { return credit; }
+    @Override
     public void setCredit(double credit) { this.credit = credit; }
-
+    @Override
     public TypeOfCard getTypeofcard() { return typeofcard; }
+    @Override
     public void setTypeofcard(TypeOfCard typeofcard) { this.typeofcard = typeofcard; }
-
+    @Override
     public Client getClient() { return client; }
+    @Override
     public void setClient(Client client) { this.client = client; }
 
     // Utils

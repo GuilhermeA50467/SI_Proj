@@ -1,9 +1,11 @@
 package isel.sisinf.model;
 
+import isel.sisinf.model.interfaces.IReplacement;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Replacement {
+public class Replacement implements IReplacement {
 
     private int number;
     private LocalDateTime dreplacement;
@@ -22,51 +24,51 @@ public class Replacement {
         this.repstation = repstation;
         this.employee = employee;
     }
-
+    @Override
     public int getNumber() {
         return number;
     }
-
+    @Override
     public void setNumber(int number) {
         this.number = number;
     }
-
+    @Override
     public LocalDateTime getDreplacement() {
         return dreplacement;
     }
-
+    @Override
     public void setDreplacement(LocalDateTime dreplacement) {
         this.dreplacement = dreplacement;
     }
-
+    @Override
     public String getAction() {
         return action;
     }
-
+    @Override
     public void setAction(String action) {
         this.action = action;
     }
-
+    @Override
     public ReplacementOrder getReporder() {
         return reporder;
     }
-
+    @Override
     public void setReporder(ReplacementOrder reporder) {
         this.reporder = reporder;
     }
-
+    @Override
     public Station getRepstation() {
         return repstation;
     }
-
+    @Override
     public void setRepstation(Station repstation) {
         this.repstation = repstation;
     }
-
+    @Override
     public Employee getEmployee() {
         return employee;
     }
-
+    @Override
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }

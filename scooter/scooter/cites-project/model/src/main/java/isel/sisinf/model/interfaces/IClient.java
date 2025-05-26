@@ -1,4 +1,6 @@
-package isel.sisinf.model;
+package isel.sisinf.model.interfaces;
+
+import isel.sisinf.model.Person;
 
 import java.time.LocalDateTime;
 

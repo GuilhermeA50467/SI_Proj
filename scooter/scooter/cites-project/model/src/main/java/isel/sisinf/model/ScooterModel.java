@@ -6,13 +6,8 @@ import java.util.Objects;
 
 public class ScooterModel {
 
-
     private int number;
-
-
     private String designation;
-
-
     private int autonomy;
 
     // Constructors

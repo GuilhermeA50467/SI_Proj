@@ -5,20 +5,11 @@ import java.util.Objects;
 
 public class Replacement {
 
-
     private int number;
-
     private LocalDateTime dreplacement;
-
     private String action;
-
-
     private ReplacementOrder reporder;
-
-
     private Station repstation;
-
-
     private Employee employee;
 
     public Replacement() {}

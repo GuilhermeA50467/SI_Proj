@@ -6,13 +6,8 @@ import java.util.Objects;
 
 public class Station {
 
-
     private int id;
-
-
     private double latitude;
-
-
     private double longitude;
 
     // Constructors

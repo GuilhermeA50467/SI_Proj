@@ -6,14 +6,9 @@ import java.util.Objects;
 
 public class ReplacementOrder {
 
-
     private LocalDateTime dorder;
-
     private LocalDateTime dreplacement;
-
     private int roccupation;
-
-
     private Station station;
 
     public ReplacementOrder() {}

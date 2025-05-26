@@ -7,28 +7,13 @@ import java.util.Objects;
 
 public class Rider {
 
-
     private int id;
-
-
     private String email;
-
-
     private int taxnumber;
-
-
     private String name;
-
-
     private LocalDateTime dtregister;
-
-
     private int cardid;
-
-
     private double credit;
-
-
     private String typeofcard;
 
     public Rider() {}

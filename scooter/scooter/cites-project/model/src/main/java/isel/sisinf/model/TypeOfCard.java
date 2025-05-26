@@ -7,11 +7,7 @@ import java.util.Objects;
 public class TypeOfCard {
 
     private String reference;
-
-
     private int nodays;
-
-
     private double price;
 
     // Constructors

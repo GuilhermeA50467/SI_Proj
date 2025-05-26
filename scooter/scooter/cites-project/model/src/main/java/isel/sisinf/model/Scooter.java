@@ -7,22 +7,11 @@ import java.util.Objects;
 
 public class Scooter {
 
-
     private int id;
-
-
     private double weight;
-
-
     private double maxvelocity;
-
-
     private int battery;
-
-
     private ScooterModel model;
-
-
     private LocalDateTime version;
 
     public Scooter() {}

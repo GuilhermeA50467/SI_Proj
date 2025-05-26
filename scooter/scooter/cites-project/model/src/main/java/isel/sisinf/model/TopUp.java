@@ -7,12 +7,8 @@ import java.util.Objects;
 
 public class TopUp {
 
-
     private LocalDateTime dttopup;
-
-
     private Card card;
-
     private double value;
 
     public TopUp() {}

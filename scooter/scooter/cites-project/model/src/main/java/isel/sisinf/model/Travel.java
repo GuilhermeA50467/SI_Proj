@@ -7,24 +7,13 @@ import java.util.Objects;
 
 public class Travel {
 
-
     private LocalDateTime dinitial;
-
     private String comment;
-
     private Integer evaluation;
-
     private LocalDateTime dfinal;
-
     private Client client;
-
-
     private Scooter scooter;
-
-
     private Station stinitial;
-
-
     private Station stfinal;
 
     public Travel() {}

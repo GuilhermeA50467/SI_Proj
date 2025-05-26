@@ -6,7 +6,6 @@ import java.util.Objects;
 
 public class Person {
 
-
     private int id;
     private String email;
     private Integer taxnumber;

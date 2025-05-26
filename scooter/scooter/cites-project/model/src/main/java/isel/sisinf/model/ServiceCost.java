@@ -6,9 +6,7 @@ import java.util.Objects;
 
 public class ServiceCost {
 
-
     private double unlock;
-
     private double usable;
 
     public ServiceCost() {}

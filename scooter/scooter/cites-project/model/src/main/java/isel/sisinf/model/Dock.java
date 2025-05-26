@@ -8,7 +8,7 @@ public class Dock {
     private int number;
     private Station station;
     private String state;
-    private Scooter scooter; // Pode ser null, por isso Integer antes virou objeto Scooter
+    private Scooter scooter;
 
     private LocalDateTime version;
 

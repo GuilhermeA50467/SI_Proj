@@ -1,32 +1,46 @@
 package isel.sisinf.model;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Client {
+@Entity
+@Table(name = "CLIENT")
+public class Client implements IClient {
 
+    @Id
+    @OneToOne()
+    @JoinColumn(name = "person")
     private Person person;
-    private LocalDateTime dtregister;
+
+    @Column(nullable = false, name = "dtregister")
+    private LocalDateTime dtRegister;
 
     // Constructors
     public Client() {}
 
-    public Client(Person person, LocalDateTime dtregister) {
+    public Client(Person person, LocalDateTime dtRegister) {
         this.person = person;
-        this.dtregister = dtregister;
+        this.dtRegister = dtRegister;
     }
 
     // Getters and Setters
     public Person getPerson() { return person; }
-    public void setPerson(Person person) { this.person = person; }
 
-    public LocalDateTime getDtregister() { return dtregister; }
-    public void setDtregister(LocalDateTime dtregister) { this.dtregister = dtregister; }
+    public void setPerson(Person person) { this.person = person;}
+
+    @Override
+    public LocalDateTime getDtRegister(){ return dtRegister; }
+
+
+    @Override
+    public void setDtRegister(LocalDateTime dtRegister) { this.dtRegister = dtRegister; }
+
 
     // Utils
     @Override
     public String toString() {
-        return "Client [person=" + person + ", dtregister=" + dtregister + "]";
+        return String.format("Client { person=%s, dtRegister=%s }", person, dtRegister);
     }
 
     @Override

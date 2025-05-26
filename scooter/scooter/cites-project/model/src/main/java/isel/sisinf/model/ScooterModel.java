@@ -1,13 +1,21 @@
 package isel.sisinf.model;
 
-
+import jakarta.persistence.*;
 import java.util.Objects;
 
-
+@Entity
+@Table(name = "SCOOTERMODEL")
 public class ScooterModel {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "number")
     private int number;
+
+    @Column(nullable = false,name = "designation")
     private String designation;
+
+    @Column(nullable = false,name = "autonomy")
     private int autonomy;
 
     // Constructors

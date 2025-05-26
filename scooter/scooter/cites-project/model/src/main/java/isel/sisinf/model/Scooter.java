@@ -1,17 +1,33 @@
 package isel.sisinf.model;
 
 
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-
+@Entity
+@Table(name = "SCOOTER")
 public class Scooter {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false, precision = 4, scale = 2)
     private double weight;
-    private double maxvelocity;
+
+    @Column(nullable = false, precision = 4, scale = 2, name = "maxvelocity")
+    private double maxVelocity;
+
+    @Column(nullable = false)
     private int battery;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "model", nullable = false)
     private ScooterModel model;
+
+    @Column(nullable = false, name = "version")
     private LocalDateTime version;
 
     public Scooter() {}
@@ -19,7 +35,7 @@ public class Scooter {
     public Scooter(int id, double weight, double maxvelocity, int battery, ScooterModel model, LocalDateTime version) {
         this.id = id;
         this.weight = weight;
-        this.maxvelocity = maxvelocity;
+        this.maxVelocity = maxvelocity;
         this.battery = battery;
         this.model = model;
         this.version = version;
@@ -32,8 +48,8 @@ public class Scooter {
     public double getWeight() { return weight; }
     public void setWeight(double weight) { this.weight = weight; }
 
-    public double getMaxvelocity() { return maxvelocity; }
-    public void setMaxvelocity(double maxvelocity) { this.maxvelocity = maxvelocity; }
+    public double getMaxVelocity() { return maxVelocity; }
+    public void setMaxVelocity(double maxVelocity) { this.maxVelocity = maxVelocity; }
 
     public int getBattery() { return battery; }
     public void setBattery(int battery) { this.battery = battery; }
@@ -42,12 +58,13 @@ public class Scooter {
     public void setModel(ScooterModel model) { this.model = model; }
 
     public LocalDateTime getVersion() { return version; }
+
     public void setVersion(LocalDateTime version) { this.version = version; }
 
     @Override
     public String toString() {
-        return "Scooter [id=" + id + ", weight=" + weight + ", maxvelocity=" + maxvelocity + ", battery=" + battery
-                + ", model=" + model + ", version=" + version + "]";
+        return String.format("Scooter [id=" + id + ", weight=" + weight + ", maxvelocity=" + maxVelocity + ", battery=" + battery
+                + ", model=" + model + ", version=" + version + "]");
     }
 
     @Override

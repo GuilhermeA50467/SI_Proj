@@ -1,22 +1,36 @@
 package isel.sisinf.model;
 
 import isel.sisinf.model.interfaces.IReplacementOrder;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-
+@Entity
+@Table(name = "REPLACEMENTORDER")
 public class ReplacementOrder implements IReplacementOrder {
 
+    @EmbeddedId
+    private ReplacementOrderId id;
+
+    @Column(name = "dorder")
     private LocalDateTime dorder;
+
+    @Column(name = "dreplacement")
     private LocalDateTime dreplacement;
+
+    @Column(name = "roccupation")
     private int roccupation;
+
+    @MapsId("stationId")
+    @ManyToOne
+    @JoinColumn(name = "station", nullable = false)
     private Station station;
 
     public ReplacementOrder() {}
 
     public ReplacementOrder(LocalDateTime dorder, LocalDateTime dreplacement, int roccupation, Station station) {
-        this.dorder = dorder;
+        this.id = new ReplacementOrderId(dorder, station.getId());
         this.dreplacement = dreplacement;
         this.roccupation = roccupation;
         this.station = station;

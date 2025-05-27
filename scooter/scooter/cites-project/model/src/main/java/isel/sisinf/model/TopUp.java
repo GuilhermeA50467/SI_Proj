@@ -2,21 +2,33 @@ package isel.sisinf.model;
 
 
 import isel.sisinf.model.interfaces.ITopUp;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-
+@Entity
+@Table(name = "TOPUP")
 public class TopUp implements ITopUp {
 
+    @EmbeddedId
+    private TopUpId id;
+
+    @Column(name = "dttopup")
     private LocalDateTime dttopup;
+
+    @ManyToOne
+    @MapsId("cardId") // vai buscar cardId de TopUpId
+    @JoinColumn(name = "card")
     private Card card;
+
+    @Column(name = "value", nullable = false)
     private double value;
 
     public TopUp() {}
 
     public TopUp(LocalDateTime dttopup, Card card, double value) {
-        this.dttopup = dttopup;
+        this.id = new TopUpId(dttopup, card.getId());
         this.card = card;
         this.value = value;
     }

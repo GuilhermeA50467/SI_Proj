@@ -1,17 +1,32 @@
 package isel.sisinf.model;
 
 import isel.sisinf.model.interfaces.IDock;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "DOCK")
 public class Dock implements IDock {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int number;
+
+    @ManyToOne
+    @JoinColumn(name = "station")
     private Station station;
+
+    @Column(name = "state", nullable = false)
     private String state;
+
+    @OneToOne
+    @JoinColumn(name = "scooter")
     private Scooter scooter;
 
+    @Column(name = "version", nullable = false)
     private LocalDateTime version;
 
     public Dock() {}

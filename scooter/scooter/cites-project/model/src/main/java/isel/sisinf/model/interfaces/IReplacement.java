@@ -19,8 +19,8 @@ public interface IReplacement {
     public ReplacementOrder getReporder();
     public void setReporder(ReplacementOrder reporder);
 
-    public Station getRepstation();
-    public void setRepstation(Station repstation);
+    public int getRepstation();
+    public void setRepstation(int repstation);
 
     public Employee getEmployee();
     public void setEmployee(Employee employee);

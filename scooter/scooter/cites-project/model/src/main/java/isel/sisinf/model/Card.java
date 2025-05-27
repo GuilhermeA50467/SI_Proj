@@ -1,14 +1,29 @@
 package isel.sisinf.model;
 
 import isel.sisinf.model.interfaces.ICard;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
+
+@Entity
+@Table(name = "CARD")
 public class Card implements ICard {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "credit")
     private double credit;
+
+    @ManyToOne
+    @JoinColumn(name = "typeofcard")
     private TypeOfCard typeofcard;
+
+    @ManyToOne
+    @JoinColumn(name = "client")
     private Client client;
 
     // Constructors

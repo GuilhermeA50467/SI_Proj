@@ -16,10 +16,10 @@ public class Person implements IPerson {
     @Column( name = "id")
     private int id;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = "taxnumber")
+    @Column(name = "taxnumber", unique = true)
     private Integer taxNumber;
 
     @Column(nullable = false, name ="name")

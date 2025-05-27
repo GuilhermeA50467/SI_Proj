@@ -2,14 +2,25 @@ package isel.sisinf.model;
 
 
 import isel.sisinf.model.interfaces.ITypeOfCard;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.util.Objects;
 
-
+@Entity
+@Table(name = "TYPEOFCARD")
 public class TypeOfCard implements ITypeOfCard {
 
+    @Id
+    @Column(name = "reference")
     private String reference;
+
+    @Column(name = "nodays")
     private int nodays;
+
+    @Column(name = "price")
     private double price;
 
     // Constructors

@@ -13,6 +13,7 @@ public class Scooter implements IScooter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     @Column(nullable = false, precision = 4, scale = 2)
@@ -28,7 +29,7 @@ public class Scooter implements IScooter {
     @JoinColumn(name = "model", nullable = false)
     private ScooterModel model;
 
-    @Column(nullable = false, name = "version")
+    @Column(nullable = true, name = "version")
     private LocalDateTime version;
 
     public Scooter() {}

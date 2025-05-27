@@ -1,22 +1,43 @@
 package isel.sisinf.model;
 
 import isel.sisinf.model.interfaces.IReplacement;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "REPLACEMENT")
 public class Replacement implements IReplacement {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "number")
     private int number;
+
+    @Column(name = "dreplacement", nullable = false)
     private LocalDateTime dreplacement;
+
+    @Column(name = "action")
     private String action;
+
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "reporder", referencedColumnName = "dorder"),
+            @JoinColumn(name = "repstation", referencedColumnName = "station")
+    })
     private ReplacementOrder reporder;
-    private Station repstation;
+
+    @Column(name = "repstation", nullable = false)
+    private int repstation;
+
+    @ManyToOne
+    @JoinColumn(name = "employee", nullable = false)
     private Employee employee;
 
     public Replacement() {}
 
-    public Replacement(int number, LocalDateTime dreplacement, String action, ReplacementOrder reporder, Station repstation, Employee employee) {
+    public Replacement(int number, LocalDateTime dreplacement, String action, ReplacementOrder reporder, int repstation, Employee employee) {
         this.number = number;
         this.dreplacement = dreplacement;
         this.action = action;
@@ -24,6 +45,7 @@ public class Replacement implements IReplacement {
         this.repstation = repstation;
         this.employee = employee;
     }
+
     @Override
     public int getNumber() {
         return number;
@@ -57,11 +79,11 @@ public class Replacement implements IReplacement {
         this.reporder = reporder;
     }
     @Override
-    public Station getRepstation() {
+    public int getRepstation() {
         return repstation;
     }
     @Override
-    public void setRepstation(Station repstation) {
+    public void setRepstation(int repstation) {
         this.repstation = repstation;
     }
     @Override

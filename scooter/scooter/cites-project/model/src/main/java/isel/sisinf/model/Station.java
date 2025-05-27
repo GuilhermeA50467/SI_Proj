@@ -2,14 +2,23 @@ package isel.sisinf.model;
 
 
 import isel.sisinf.model.interfaces.IStation;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
-
+@Entity
+@Table(name = "STATION")
 public class Station implements IStation {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "latitude", nullable = false)
     private double latitude;
+
+    @Column(name = "longitude", nullable = false)
     private double longitude;
 
     // Constructors

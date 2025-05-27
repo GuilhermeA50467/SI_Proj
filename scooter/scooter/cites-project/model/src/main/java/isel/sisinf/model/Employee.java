@@ -1,15 +1,22 @@
 package isel.sisinf.model;
 
 import isel.sisinf.model.interfaces.IEmployee;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-
+@Entity
+@Table(name = "EMPLOYEE")
 public class Employee implements IEmployee {
 
-    private int number;
+    @Id
+    @OneToOne
+    @JoinColumn(name = "person")
     private Person person;
+
+    @Column(name = "number", unique = true)
+    private int number;
 
     // Constructors
     public Employee() {}

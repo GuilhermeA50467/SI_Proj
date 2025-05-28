@@ -26,5 +26,6 @@ package isel.sisinf.jpa;
 public class Dal
 {
     //For Demonstration purpose only
+
     public static String version(){ return "1.0";}
 }

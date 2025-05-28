@@ -23,6 +23,14 @@ SOFTWARE.
 */
 package isel.sisinf.ui;
 
+import isel.sisinf.model.Rider;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
+
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Scanner;
 import java.util.HashMap;
 
@@ -152,14 +160,74 @@ class UI
     private static final int TAB_SIZE = 24;
 
     private void createCostumer() {
-        // TODO
+
         System.out.println("createCostumer()");
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("=== Criar novo Rider ===");
+
+        System.out.print("Nome: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Email: ");
+        String email = scanner.nextLine();
+
+        System.out.print("Número de contribuinte (tax number): ");
+        int taxnumber = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Crédito inicial: ");
+        double credit = Double.parseDouble(scanner.nextLine());
+
+        System.out.print("Tipo de cartão (resident / tourist): ");
+        String typeofcard = scanner.nextLine();
+
+        LocalDateTime dtregister = LocalDateTime.now();
+
+        Rider newRider = new Rider();
+        newRider.setName(name);
+        newRider.setEmail(email);
+        newRider.setTaxnumber(taxnumber);
+        newRider.setDtregister(dtregister);
+        newRider.setCredit(credit);
+        newRider.setTypeofcard(typeofcard);
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("dal-lab");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin();
+            em.persist(newRider);
+            tx.commit();
+            System.out.println("Rider criado com sucesso: " + newRider);
+        } catch (Exception e) {
+            if (tx.isActive()) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            em.close();
+            emf.close();
+        }
+
     }
   
-    private void listCostumer()
-    {
-        // TODO
-        System.out.println("listCostumer()");
+    private void listCostumer() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("dal-lab");
+        EntityManager em = emf.createEntityManager();
+        try {
+            List<Rider> riders = em.createQuery("SELECT r FROM Rider r", Rider.class).getResultList();
+
+            for (Rider rider : riders) {
+                System.out.println("Client: " + rider.getName() + ", Type of Card: " + rider.getTypeofcard());
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
+        finally {
+            em.close();
+            emf.close();
+        }
     }
 
     private void listDocks()

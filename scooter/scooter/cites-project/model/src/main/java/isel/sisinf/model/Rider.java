@@ -2,20 +2,30 @@ package isel.sisinf.model;
 
 
 import isel.sisinf.model.interfaces.IRider;
-
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-
+@Entity
+@Table(name = "rider")
 public class Rider implements IRider {
 
+    @Id
+    @Column(name="id")
     private int id;
+    @Column(name="email")
     private String email;
+    @Column(name ="taxnumber")
     private int taxnumber;
+    @Column(name ="name")
     private String name;
+    @Column(name ="dtregister")
     private LocalDateTime dtregister;
+    @Column(name ="cardid")
     private int cardid;
+    @Column(name ="credit")
     private double credit;
+    @Column(name ="typeofcard")
     private String typeofcard;
 
     public Rider() {}

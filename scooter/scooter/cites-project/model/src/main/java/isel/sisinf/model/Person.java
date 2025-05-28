@@ -28,8 +28,7 @@ public class Person implements IPerson {
     // Constructors
     public Person() {}
 
-    public Person(int id, String email, Integer taxnumber, String name) {
-        this.id = id;
+    public Person(String email, Integer taxnumber, String name) {
         this.email = email;
         this.taxNumber = taxnumber;
         this.name = name;

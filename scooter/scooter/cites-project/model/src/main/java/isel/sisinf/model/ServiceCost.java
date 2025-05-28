@@ -2,6 +2,8 @@ package isel.sisinf.model;
 
 
 import isel.sisinf.model.interfaces.IServiceCost;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 import java.util.Objects;
 

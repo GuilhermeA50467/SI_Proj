@@ -4,6 +4,7 @@ package isel.sisinf.model;
 import isel.sisinf.model.interfaces.IStation;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -15,17 +16,16 @@ public class Station implements IStation {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "latitude", nullable = false)
-    private double latitude;
+    @Column(name = "latitude", nullable = false, precision = 6, scale = 4)
+    private BigDecimal latitude;
 
-    @Column(name = "longitude", nullable = false)
-    private double longitude;
+    @Column(name = "longitude", nullable = false, precision = 6, scale = 4)
+    private BigDecimal longitude;
 
     // Constructors
     public Station() {}
 
-    public Station(int id, double latitude, double longitude) {
-        this.id = id;
+    public Station(BigDecimal latitude, BigDecimal longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -36,13 +36,13 @@ public class Station implements IStation {
     @Override
     public void setId(int id) { this.id = id; }
     @Override
-    public double getLatitude() { return latitude; }
+    public BigDecimal getLatitude() { return latitude; }
     @Override
-    public void setLatitude(double latitude) { this.latitude = latitude; }
+    public void setLatitude(BigDecimal latitude) { this.latitude = latitude; }
     @Override
-    public double getLongitude() { return longitude; }
+    public BigDecimal getLongitude() { return longitude; }
     @Override
-    public void setLongitude(double longitude) { this.longitude = longitude; }
+    public void setLongitude(BigDecimal longitude) { this.longitude = longitude; }
 
     // Utils
     @Override

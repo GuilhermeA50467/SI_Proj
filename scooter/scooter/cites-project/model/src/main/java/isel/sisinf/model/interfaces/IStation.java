@@ -1,13 +1,15 @@
 package isel.sisinf.model.interfaces;
 
+import java.math.BigDecimal;
+
 public interface IStation {
 
     public int getId();
     public void setId(int id);
 
-    public double getLatitude();
-    public void setLatitude(double latitude);
+    public BigDecimal getLatitude();
+    public void setLatitude(BigDecimal latitude);
 
-    public double getLongitude() ;
-    public void setLongitude(double longitude);
+    public BigDecimal getLongitude() ;
+    public void setLongitude(BigDecimal longitude);
 }

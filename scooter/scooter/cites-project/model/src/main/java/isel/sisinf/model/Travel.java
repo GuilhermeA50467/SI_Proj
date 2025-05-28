@@ -2,28 +2,49 @@ package isel.sisinf.model;
 
 
 import isel.sisinf.model.interfaces.ITravel;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-
+@Entity
+@Table(name = "TRAVEL")
 public class Travel implements ITravel {
 
-    private LocalDateTime dinitial;
+    @EmbeddedId
+    private TravelId id;
+
+    @Column(name = "comment")
     private String comment;
+
+    @Column(name = "evaluation")
     private Integer evaluation;
+
+    @Column(name = "dfinal")
     private LocalDateTime dfinal;
+
+    @ManyToOne
+    @JoinColumn(name = "client", nullable = false)
     private Client client;
+
+    @ManyToOne
+    @JoinColumn(name = "scooter", nullable = false)
     private Scooter scooter;
+
+    @ManyToOne
+    @JoinColumn(name = "stinitial", nullable = false)
     private Station stinitial;
+
+    @ManyToOne
+    @JoinColumn(name = "stfinal")
     private Station stfinal;
 
     public Travel() {}
 
     public Travel(LocalDateTime dinitial, String comment, Integer evaluation, LocalDateTime dfinal,
                   Client client, Scooter scooter, Station stinitial, Station stfinal) {
-        this.dinitial = dinitial;
+        this.id = new TravelId(dinitial, scooter.getId());
         this.comment = comment;
         this.evaluation = evaluation;
         this.dfinal = dfinal;
@@ -32,10 +53,11 @@ public class Travel implements ITravel {
         this.stinitial = stinitial;
         this.stfinal = stfinal;
     }
+
     @Override
-    public LocalDateTime getDinitial() {return dinitial;}
+    public LocalDateTime getDinitial() {return id.getDinitial();}
     @Override
-    public void setDinitial(LocalDateTime dinitial) {this.dinitial = dinitial;}
+    public void setDinitial(LocalDateTime dinitial) {this.id.setDinitial(dinitial);}
     @Override
     public String getComment() {return comment;}
     @Override
@@ -67,14 +89,14 @@ public class Travel implements ITravel {
 
     @Override
     public String toString() {
-        return "Travel [dinitial=" + dinitial + ", comment=" + comment + ", evaluation=" + evaluation +
+        return "Travel [dinitial=" + id.getDinitial()  + ", comment=" + comment + ", evaluation=" + evaluation +
                ", dfinal=" + dfinal + ", client=" + client + ", scooter=" + scooter +
                ", stinitial=" + stinitial + ", stfinal=" + stfinal + "]";
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dinitial);
+        return Objects.hash(id);
     }
 
     @Override
@@ -84,6 +106,6 @@ public class Travel implements ITravel {
         if (obj == null || getClass() != obj.getClass())
             return false;
         Travel other = (Travel) obj;
-        return dinitial.equals(other.dinitial);
+        return id.equals(other.id);
     }
 }

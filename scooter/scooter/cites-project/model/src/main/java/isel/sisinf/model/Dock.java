@@ -12,27 +12,26 @@ public class Dock implements IDock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "number")
     private int number;
 
     @ManyToOne
-    @JoinColumn(name = "station")
+    @JoinColumn(name = "station", nullable = false)
     private Station station;
 
-    @Column(name = "state", nullable = false)
+    @Column(name = "state", nullable = false, length = 30)
     private String state;
 
     @OneToOne
     @JoinColumn(name = "scooter")
     private Scooter scooter;
 
-    @Column(name = "version", nullable = false)
+    @Column(name = "version", nullable = true)
     private LocalDateTime version;
 
     public Dock() {}
 
-    public Dock(int number, Station station, String state, Scooter scooter, LocalDateTime version) {
-        this.number = number;
+    public Dock(Station station, String state, Scooter scooter, LocalDateTime version) {
         this.station = station;
         this.state = state;
         this.scooter = scooter;

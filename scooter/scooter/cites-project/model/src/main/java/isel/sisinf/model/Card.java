@@ -3,6 +3,7 @@ package isel.sisinf.model;
 import isel.sisinf.model.interfaces.ICard;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 
@@ -15,8 +16,8 @@ public class Card implements ICard {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "credit")
-    private double credit;
+    @Column(name = "credit", precision = 4, scale = 2)
+    private BigDecimal credit;
 
     @ManyToOne
     @JoinColumn(name = "typeofcard")
@@ -29,8 +30,7 @@ public class Card implements ICard {
     // Constructors
     public Card() {}
 
-    public Card(int id, double credit, TypeOfCard typeofcard, Client client) {
-        this.id = id;
+    public Card(BigDecimal credit, TypeOfCard typeofcard, Client client) {
         this.credit = credit;
         this.typeofcard = typeofcard;
         this.client = client;
@@ -42,9 +42,9 @@ public class Card implements ICard {
     @Override
     public void setId(int id) { this.id = id; }
     @Override
-    public double getCredit() { return credit; }
+    public BigDecimal getCredit() { return credit; }
     @Override
-    public void setCredit(double credit) { this.credit = credit; }
+    public void setCredit(BigDecimal credit) { this.credit = credit; }
     @Override
     public TypeOfCard getTypeofcard() { return typeofcard; }
     @Override

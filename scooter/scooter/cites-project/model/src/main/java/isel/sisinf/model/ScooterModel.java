@@ -15,17 +15,16 @@ public class ScooterModel implements IScooterModel {
     @Column(name = "number")
     private int number;
 
-    @Column(nullable = false,name = "designation")
+    @Column(name = "designation", nullable = false, length = 30)
     private String designation;
 
-    @Column(nullable = false,name = "autonomy")
+    @Column(name = "autonomy",nullable = false)
     private int autonomy;
 
     // Constructors
     public ScooterModel() {}
 
-    public ScooterModel(int number, String designation, int autonomy) {
-        this.number = number;
+    public ScooterModel(String designation, int autonomy) {
         this.designation = designation;
         this.autonomy = autonomy;
     }

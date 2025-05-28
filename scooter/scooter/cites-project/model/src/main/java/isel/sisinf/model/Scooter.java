@@ -4,6 +4,7 @@ package isel.sisinf.model;
 import isel.sisinf.model.interfaces.IScooter;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -16,11 +17,11 @@ public class Scooter implements IScooter {
     @Column(name = "id")
     private int id;
 
-    @Column(nullable = false, precision = 4, scale = 2)
-    private double weight;
+    @Column(name = "weight", nullable = false, precision = 4, scale = 2)
+    private BigDecimal weight;
 
-    @Column(nullable = false, precision = 4, scale = 2, name = "maxvelocity")
-    private double maxVelocity;
+    @Column(name = "maxvelocity", nullable = false, precision = 4, scale = 2)
+    private BigDecimal maxVelocity;
 
     @Column(nullable = false)
     private int battery;
@@ -29,13 +30,12 @@ public class Scooter implements IScooter {
     @JoinColumn(name = "model", nullable = false)
     private ScooterModel model;
 
-    @Column(nullable = true, name = "version")
+    @Column(name = "version")
     private LocalDateTime version;
 
     public Scooter() {}
 
-    public Scooter(int id, double weight, double maxvelocity, int battery, ScooterModel model, LocalDateTime version) {
-        this.id = id;
+    public Scooter(BigDecimal weight, BigDecimal maxvelocity, int battery, ScooterModel model, LocalDateTime version) {
         this.weight = weight;
         this.maxVelocity = maxvelocity;
         this.battery = battery;
@@ -49,13 +49,13 @@ public class Scooter implements IScooter {
     @Override
     public void setId(int id) { this.id = id; }
     @Override
-    public double getWeight() { return weight; }
+    public BigDecimal getWeight() { return weight; }
     @Override
-    public void setWeight(double weight) { this.weight = weight; }
+    public void setWeight(BigDecimal weight) { this.weight = weight; }
     @Override
-    public double getMaxVelocity() { return maxVelocity; }
+    public BigDecimal getMaxVelocity() { return maxVelocity; }
     @Override
-    public void setMaxVelocity(double maxVelocity) { this.maxVelocity = maxVelocity; }
+    public void setMaxVelocity(BigDecimal maxVelocity) { this.maxVelocity = maxVelocity; }
     @Override
     public int getBattery() { return battery; }
     @Override

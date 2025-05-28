@@ -16,13 +16,13 @@ public class Employee implements IEmployee {
     private Person person;
 
     @Column(name = "number", unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int number;
 
     // Constructors
     public Employee() {}
 
-    public Employee(int number, Person person) {
-        this.number = number;
+    public Employee(Person person) {
         this.person = person;
     }
 

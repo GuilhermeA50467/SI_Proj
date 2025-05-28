@@ -2,17 +2,18 @@ package isel.sisinf.model.interfaces;
 
 import isel.sisinf.model.ScooterModel;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public interface IScooter {
     public int getId();
     public void setId(int id);
 
-    public double getWeight();
-    public void setWeight(double weight);
+    public BigDecimal getWeight();
+    public void setWeight(BigDecimal weight);
 
-    public double getMaxVelocity();
-    public void setMaxVelocity(double maxVelocity);
+    public BigDecimal getMaxVelocity();
+    public void setMaxVelocity(BigDecimal maxVelocity);
 
     public int getBattery();
     public void setBattery(int battery);

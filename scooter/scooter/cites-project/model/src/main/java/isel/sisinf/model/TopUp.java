@@ -65,7 +65,7 @@ public class TopUp implements ITopUp {
 
     @Override
     public int hashCode() {
-        return Objects.hash(dttopup);
+        return Objects.hash(id);
     }
 
     @Override
@@ -75,6 +75,6 @@ public class TopUp implements ITopUp {
         if (obj == null || getClass() != obj.getClass())
             return false;
         TopUp other = (TopUp) obj;
-        return dttopup.equals(other.dttopup);
+        return id.equals(other.id);
     }
 }

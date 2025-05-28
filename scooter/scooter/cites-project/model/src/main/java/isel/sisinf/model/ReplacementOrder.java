@@ -13,13 +13,10 @@ public class ReplacementOrder implements IReplacementOrder {
     @EmbeddedId
     private ReplacementOrderId id;
 
-    @Column(name = "dorder")
-    private LocalDateTime dorder;
-
     @Column(name = "dreplacement")
     private LocalDateTime dreplacement;
 
-    @Column(name = "roccupation")
+    @Column(name = "roccupation", nullable = false)
     private int roccupation;
 
     @MapsId("stationId")
@@ -37,13 +34,9 @@ public class ReplacementOrder implements IReplacementOrder {
     }
 
     @Override
-    public LocalDateTime getDorder() {
-        return dorder;
-    }
+    public LocalDateTime getDorder() { return id.getDorder();}
     @Override
-    public void setDorder(LocalDateTime dorder) {
-        this.dorder = dorder;
-    }
+    public void setDorder(LocalDateTime dorder) {this.id.setDorder(dorder);}
     @Override
     public LocalDateTime getDreplacement() {
         return dreplacement;
@@ -71,13 +64,13 @@ public class ReplacementOrder implements IReplacementOrder {
 
     @Override
     public String toString() {
-        return "ReplacementOrder [dorder=" + dorder + ", dreplacement=" + dreplacement + ", roccupation=" + roccupation
+        return "ReplacementOrder [dorder=" + id.getDorder() + ", dreplacement=" + dreplacement + ", roccupation=" + roccupation
                 + ", station=" + station + "]";
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dorder);
+        return Objects.hash(id);
     }
 
     @Override
@@ -87,6 +80,6 @@ public class ReplacementOrder implements IReplacementOrder {
         if (obj == null || getClass() != obj.getClass())
             return false;
         ReplacementOrder other = (ReplacementOrder) obj;
-        return Objects.equals(dorder, other.dorder);
+        return Objects.equals(id, other.id);
     }
 }

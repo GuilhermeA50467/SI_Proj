@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -21,12 +22,12 @@ public class TypeOfCard implements ITypeOfCard {
     private int nodays;
 
     @Column(name = "price")
-    private double price;
+    private BigDecimal price;
 
     // Constructors
     public TypeOfCard() {}
 
-    public TypeOfCard(String reference, int nodays, double price) {
+    public TypeOfCard(String reference, int nodays, BigDecimal price) {
         this.reference = reference;
         this.nodays = nodays;
         this.price = price;
@@ -42,9 +43,9 @@ public class TypeOfCard implements ITypeOfCard {
     @Override
     public void setNodays(int nodays) { this.nodays = nodays; }
     @Override
-    public double getPrice() { return price; }
+    public BigDecimal getPrice() { return price; }
     @Override
-    public void setPrice(double price) { this.price = price; }
+    public void setPrice(BigDecimal price) { this.price = price; }
 
     // Utility methods
     @Override

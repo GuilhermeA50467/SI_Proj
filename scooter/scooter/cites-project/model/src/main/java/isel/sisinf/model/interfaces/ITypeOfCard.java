@@ -1,5 +1,7 @@
 package isel.sisinf.model.interfaces;
 
+import java.math.BigDecimal;
+
 public interface ITypeOfCard {
     public String getReference();
     public void setReference(String reference);
@@ -7,6 +9,6 @@ public interface ITypeOfCard {
     public int getNodays();
     public void setNodays(int nodays);
 
-    public double getPrice();
-    public void setPrice(double price);
+    public BigDecimal getPrice();
+    public void setPrice(BigDecimal price);
 }

@@ -2,7 +2,8 @@ package isel.sisinf.jpa;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
-import java.util.Collection;
+
+import java.util.List;
 
 public abstract class AbstractRepository<T, K> implements IRepository<T, K> {
 
@@ -33,7 +34,7 @@ public abstract class AbstractRepository<T, K> implements IRepository<T, K> {
     }
 
     @Override
-    public Collection<T> find(String jpql, Object... params) {
+    public List<T> find(String jpql, Object... params) {
         Query query = em.createQuery(jpql);
         for (int i = 0; i < params.length; i++) {
             query.setParameter(i + 1, params[i]);

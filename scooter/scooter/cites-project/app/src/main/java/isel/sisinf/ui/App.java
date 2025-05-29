@@ -34,9 +34,7 @@ import jakarta.persistence.Persistence;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Scanner;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * 
@@ -213,12 +211,11 @@ class UI
     //BALISTICO ESTE
     private void listDocks() {
         RepositoryStation stationRepo = context.getRepositoryStation();
+        Map<Station, BigDecimal> occupancyMap =stationRepo.getOccupancy();
         try {
-            var stations = stationRepo.find("SELECT s FROM Station s");
-            for (Station obj : stations) {
-                BigDecimal occupancy = stationRepo.getDockOccupancy(obj.getId());
-                System.out.printf("Estação ID: %d,Ocupação: %.2f%%\n", obj.getId(), occupancy);
-            }
+            occupancyMap.forEach((station, occupancy) -> {
+                System.out.printf("Dock ID: %d,Occupancy: %.2f%%\n", station.getId(), occupancy);
+            });
         } catch (Exception e) {
             System.err.println("Erro ao listar docas: " + e.getMessage());
             e.printStackTrace();

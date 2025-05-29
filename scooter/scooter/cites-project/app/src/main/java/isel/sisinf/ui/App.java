@@ -23,8 +23,9 @@ SOFTWARE.
 */
 package isel.sisinf.ui;
 
-import isel.sisinf.jpa.AbstractRepositoryRider;
-import isel.sisinf.jpa.AbstractRepositoryStation;
+import isel.sisinf.jpa.jpaContext;
+import isel.sisinf.jpa.repositorys.RepositoryRider;
+import isel.sisinf.jpa.repositorys.RepositoryStation;
 import isel.sisinf.jpa.JPAhelpers;
 import isel.sisinf.model.Rider;
 import isel.sisinf.model.Station;
@@ -32,6 +33,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Scanner;
@@ -54,6 +57,10 @@ interface DbWorker
 }
 class UI
 {
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("dal-lab");
+    private static final EntityManager em = emf.createEntityManager();
+    private static final jpaContext context = new jpaContext(em);
+
     private enum Option
     {
         // DO NOT CHANGE ANYTHING!
@@ -179,32 +186,21 @@ class UI
         newRider.setDtregister(dtregister);
         newRider.setCredit(credit);
         newRider.setTypeofcard(typeofcard);
-
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("dal-lab");
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-
-        AbstractRepositoryRider riderRepo = new AbstractRepositoryRider(em);
-
+        RepositoryRider riderRepo = context.getRepositoryRider();
         try {
-            tx.begin();
+            context.beginTransaction();
             riderRepo.create(newRider);
-            tx.commit();
+            context.commitTransaction();
             System.out.println("Rider criado com sucesso: " + newRider.getName());
         } catch (Exception e) {
-            if (tx.isActive()) tx.rollback();
+            if (context.isTransactionActive()) context.rollbackTransaction();
             e.printStackTrace();
-        } finally {
-            em.close();
-            emf.close();
         }
     }
 
     //BALISTICO ESTE
     private void listCostumer() {
-        EntityManager em = JPAhelpers.createEntityManager();
-        AbstractRepositoryRider riderRepo = new AbstractRepositoryRider(em);
-
+        RepositoryRider riderRepo = context.getRepositoryRider();
         try {
             Collection<Rider> riders = riderRepo.find("SELECT r FROM Rider r");
 
@@ -214,29 +210,21 @@ class UI
 
         } catch (Exception e) {
             System.err.println("Error listing customers: " + e.getMessage());
-        } finally {
-            JPAhelpers.closeEntityManager(em);
-            JPAhelpers.closeEntityManagerFactory();
         }
     }
     //BALISTICO ESTE
     private void listDocks() {
-        EntityManager em = JPAhelpers.createEntityManager();
-        AbstractRepositoryStation stationRepo = new AbstractRepositoryStation(em);
+        RepositoryStation stationRepo = context.getRepositoryStation();
         try {
             var stations = stationRepo.find("SELECT s FROM Station s");
             for (Station obj : stations) {
-                double occupancy = stationRepo.getDockOccupancy(obj.getId());
+                BigDecimal occupancy = stationRepo.getDockOccupancy(obj.getId());
                 System.out.printf("Estação ID: %d,Ocupação: %.2f%%\n", obj.getId(), occupancy);
             }
         } catch (Exception e) {
             System.err.println("Erro ao listar docas: " + e.getMessage());
             e.printStackTrace();
-        } finally {
-            JPAhelpers.closeEntityManager(em);
-            JPAhelpers.closeEntityManagerFactory();
         }
-
     }
 
     private void startTrip() {
@@ -267,10 +255,25 @@ class UI
         String values = key.nextLine();
         return values;
     }
+
+    public void closeResources() {
+        if (em.isOpen()) {
+            em.close();
+        }
+        if (emf.isOpen()) {
+            emf.close();
+        }
+    }
 }
 
 public class App{
+
     public static void main(String[] args) throws Exception{
-        UI.getInstance().Run();
+        UI ui = UI.getInstance();
+        try {
+            ui.Run();
+        } finally {
+            ui.closeResources(); // Ensure resources are closed after execution
+        }
     }
 }

@@ -26,12 +26,10 @@ package isel.sisinf.ui;
 import isel.sisinf.jpa.jpaContext;
 import isel.sisinf.jpa.repositorys.RepositoryRider;
 import isel.sisinf.jpa.repositorys.RepositoryStation;
-import isel.sisinf.jpa.JPAhelpers;
 import isel.sisinf.model.Rider;
 import isel.sisinf.model.Station;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
 import java.math.BigDecimal;
@@ -242,6 +240,12 @@ class UI
     private void about()
     {
         // TODO: Add your Group ID & member names
+        System.out.println("CITES Management DEMO");
+        System.out.println("Group ID: 05");
+        System.out.println("Members:");
+        System.out.println("Guilherme Coutinho, nº50467");
+        System.out.println("Francisco Tavares, nº51618");
+        System.out.println("Andre Nunes, nº51766");
         System.out.println("DAL version:"+ isel.sisinf.jpa.Dal.version());
         System.out.println("Core version:"+ isel.sisinf.model.Core.version());
         

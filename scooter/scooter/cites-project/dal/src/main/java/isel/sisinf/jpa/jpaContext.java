@@ -25,7 +25,7 @@ public class jpaContext {
 
 
     public void beginTransaction() {
-        if (isTransactionActive()) {
+        if (!em.getTransaction().isActive()) {
             em.getTransaction().begin();
         }
     }

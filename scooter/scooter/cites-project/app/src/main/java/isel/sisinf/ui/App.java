@@ -164,22 +164,11 @@ class UI
     //GPTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
     private void createCostumer() {
 
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Nome: ");
-        String name = scanner.nextLine();
-
-        System.out.print("Email: ");
-        String email = scanner.nextLine();
-
-        System.out.print("Número de contribuinte (tax number): ");
-        int taxnumber = Integer.parseInt(scanner.nextLine());
-
-        System.out.print("Crédito inicial: ");
-        double credit = Double.parseDouble(scanner.nextLine());
-
-        System.out.print("Tipo de cartão (resident / tourist): ");
-        String typeofcard = scanner.nextLine();
+        String name = inputData("Nome: ", true);
+        String email = inputData("Email: ", false);
+        int taxnumber = Integer.parseInt(inputData("Número de contribuinte (tax number): ", false));
+        double credit = Double.parseDouble(inputData("Crédito inicial: ", false));
+        String typeofcard = inputData("Tipo de cartão (resident / tourist): ", false);
 
         LocalDateTime dtregister = LocalDateTime.now();
 
@@ -268,6 +257,15 @@ class UI
         System.out.println("DAL version:"+ isel.sisinf.jpa.Dal.version());
         System.out.println("Core version:"+ isel.sisinf.model.Core.version());
         
+    }
+
+    static String inputData(String str, Boolean show){
+        java.util.Scanner key = new Scanner(System.in);
+        if(show) System.out.print("Enter corresponding values, separated by commas of: \n");
+        System.out.print(str);
+        System.out.print(">");
+        String values = key.nextLine();
+        return values;
     }
 }
 

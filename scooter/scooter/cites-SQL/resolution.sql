@@ -88,8 +88,37 @@ $$ LANGUAGE plpgsql;
 
 SELECT fx_dock_occupancy(1);
 
+CREATE OR REPLACE PROCEDURE sp_chama_fx_dock_occupancy(
+    IN stationkid INTEGER,
+    OUT occupancy_ratio NUMERIC
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    occupancy_ratio := fx_dock_occupancy(stationkid);
+END;
+$$;
 
+CREATE OR REPLACE PROCEDURE pr_dock_occupancy(
+    IN stationkid INTEGER,
+    OUT occupancy NUMERIC
+)
+AS $$
+BEGIN
+    occupancy := fx_dock_occupancy(stationkid);
+END;
+$$ LANGUAGE plpgsql;
 
+SELECT
+    routine_schema,
+    routine_name,
+    data_type
+FROM
+    information_schema.routines
+WHERE
+    routine_type = 'PROCEDURE'
+ORDER BY
+    routine_schema, routine_name;
 --TODO
 -- endregion
 

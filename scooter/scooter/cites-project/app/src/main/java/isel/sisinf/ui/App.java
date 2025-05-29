@@ -112,7 +112,7 @@ class UI
             System.out.println("4. List Docks");
             System.out.println("5. Start Trip");
             System.out.println("6. Park Scooter");
-            System.out.println("8. About");
+            System.out.println("7. About");
             System.out.print(">");
             int result = s.nextInt();
             option = Option.values()[result];
@@ -226,8 +226,20 @@ class UI
     }
 
     private void startTrip() {
-        // TODO
-        System.out.println("startTrip()");
+        try {
+            int dockid = Integer.parseInt(inputData("ID da doca de partida: ", false));
+            int clientid = Integer.parseInt(inputData("ID do cliente: ", false));
+
+            context.beginTransaction();
+            context.getRepositoryTravel().startTrip(dockid, clientid);
+            context.commitTransaction();
+
+            System.out.println("Viagem iniciada com sucesso!");
+        } catch (Exception e) {
+            if (context.isTransactionActive()) context.rollbackTransaction();
+            System.err.println("Erro ao iniciar viagem: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void parkScooter()

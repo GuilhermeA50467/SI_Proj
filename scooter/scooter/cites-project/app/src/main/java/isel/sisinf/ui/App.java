@@ -23,14 +23,17 @@ SOFTWARE.
 */
 package isel.sisinf.ui;
 
+import isel.sisinf.jpa.AbstractRepositoryRider;
+import isel.sisinf.jpa.AbstractRepositoryStation;
+import isel.sisinf.jpa.JPAhelpers;
 import isel.sisinf.model.Rider;
+import isel.sisinf.model.Station;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
-
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collection;
 import java.util.Scanner;
 import java.util.HashMap;
 
@@ -158,13 +161,10 @@ class UI
     */
 
     private static final int TAB_SIZE = 24;
-
+    //GPTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
     private void createCostumer() {
 
-        System.out.println("createCostumer()");
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("=== Criar novo Rider ===");
 
         System.out.print("Nome: ");
         String name = scanner.nextLine();
@@ -195,11 +195,13 @@ class UI
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
+        AbstractRepositoryRider riderRepo = new AbstractRepositoryRider(em);
+
         try {
             tx.begin();
-            em.persist(newRider);
+            riderRepo.create(newRider);
             tx.commit();
-            System.out.println("Rider criado com sucesso: " + newRider);
+            System.out.println("Rider criado com sucesso: " + newRider.getName());
         } catch (Exception e) {
             if (tx.isActive()) tx.rollback();
             e.printStackTrace();
@@ -207,33 +209,44 @@ class UI
             em.close();
             emf.close();
         }
-
     }
-  
-    private void listCostumer() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("dal-lab");
-        EntityManager em = emf.createEntityManager();
-        try {
-            List<Rider> riders = em.createQuery("SELECT r FROM Rider r", Rider.class).getResultList();
 
-            for (Rider rider : riders) {
-                System.out.println("Client: " + rider.getName() + ", Type of Card: " + rider.getTypeofcard());
-            }
+    //BALISTICO ESTE
+    private void listCostumer() {
+        EntityManager em = JPAhelpers.createEntityManager();
+        AbstractRepositoryRider riderRepo = new AbstractRepositoryRider(em);
+
+        try {
+            Collection<Rider> riders = riderRepo.find("SELECT r FROM Rider r");
+
+            riders.forEach(rider ->
+                    System.out.println("Client: " + rider.getName() + ", Type of Card: " + rider.getTypeofcard())
+            );
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw e;
-        }
-        finally {
-            em.close();
-            emf.close();
+            System.err.println("Error listing customers: " + e.getMessage());
+        } finally {
+            JPAhelpers.closeEntityManager(em);
+            JPAhelpers.closeEntityManagerFactory();
         }
     }
-
-    private void listDocks()
-    {
-        // TODO
-        System.out.println("listDocks()");
+    //BALISTICO ESTE
+    private void listDocks() {
+        EntityManager em = JPAhelpers.createEntityManager();
+        AbstractRepositoryStation stationRepo = new AbstractRepositoryStation(em);
+        try {
+            var stations = stationRepo.find("SELECT s FROM Station s");
+            for (Station obj : stations) {
+                double occupancy = stationRepo.getDockOccupancy(obj.getId());
+                System.out.printf("Estação ID: %d,Ocupação: %.2f%%\n", obj.getId(), occupancy);
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao listar docas: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            JPAhelpers.closeEntityManager(em);
+            JPAhelpers.closeEntityManagerFactory();
+        }
 
     }
 

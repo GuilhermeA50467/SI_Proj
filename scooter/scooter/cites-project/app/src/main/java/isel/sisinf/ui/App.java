@@ -23,6 +23,7 @@ SOFTWARE.
 */
 package isel.sisinf.ui;
 
+import isel.sisinf.jpa.ServicesData.DataTravel;
 import isel.sisinf.jpa.jpaContext;
 import isel.sisinf.jpa.repositorys.RepositoryRider;
 import isel.sisinf.jpa.repositorys.RepositoryStation;
@@ -210,13 +211,11 @@ class UI
 
     private void startTrip() {
         try {
-            int dockid = Integer.parseInt(inputData("ID da doca de partida: ", false));
-            int clientid = Integer.parseInt(inputData("ID do cliente: ", false));
+            int[] inputTravel = DataTravel.readTripInput();
 
             context.beginTransaction();
-            context.getRepositoryTravel().startTrip(dockid, clientid);
+            context.getRepositoryTravel().startTrip(inputTravel[0], inputTravel[1]);
             context.commitTransaction();
-
             System.out.println("Viagem iniciada com sucesso!");
         } catch (Exception e) {
             if (context.isTransactionActive()) context.rollbackTransaction();

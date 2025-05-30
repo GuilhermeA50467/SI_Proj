@@ -31,6 +31,7 @@ import isel.sisinf.model.Station;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import isel.sisinf.jpa.ServicesData.DataRider;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -164,24 +165,9 @@ class UI
     */
 
     private static final int TAB_SIZE = 24;
-    //GPTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+
     private void createCostumer() {
-
-        String name = inputData("Nome: ", true);
-        String email = inputData("Email: ", false);
-        int taxnumber = Integer.parseInt(inputData("Número de contribuinte (tax number): ", false));
-        double credit = Double.parseDouble(inputData("Crédito inicial: ", false));
-        String typeofcard = inputData("Tipo de cartão (resident / tourist): ", false);
-
-        LocalDateTime dtregister = LocalDateTime.now();
-
-        Rider newRider = new Rider();
-        newRider.setName(name);
-        newRider.setEmail(email);
-        newRider.setTaxnumber(taxnumber);
-        newRider.setDtregister(dtregister);
-        newRider.setCredit(credit);
-        newRider.setTypeofcard(typeofcard);
+        Rider newRider = DataRider.createRiderFromInput();
         RepositoryRider riderRepo = context.getRepositoryRider();
         try {
             context.beginTransaction();

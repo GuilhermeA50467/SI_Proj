@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "rider")
+@Table(name = "Rider")
 @NamedQuery(name = "Rider.findByKey", query = "SELECT r FROM Rider r WHERE r.id = :key")
 public class Rider implements IRider {
 

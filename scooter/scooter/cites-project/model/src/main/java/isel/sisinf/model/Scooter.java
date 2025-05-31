@@ -5,6 +5,7 @@ import isel.sisinf.model.interfaces.IScooter;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -31,11 +32,11 @@ public class Scooter implements IScooter {
     private ScooterModel model;
 
     @Column(name = "version")
-    private LocalDateTime version;
+    private Timestamp version;
 
     public Scooter() {}
 
-    public Scooter(BigDecimal weight, BigDecimal maxvelocity, int battery, ScooterModel model, LocalDateTime version) {
+    public Scooter(BigDecimal weight, BigDecimal maxvelocity, int battery, ScooterModel model, Timestamp version) {
         this.weight = weight;
         this.maxVelocity = maxvelocity;
         this.battery = battery;
@@ -65,9 +66,9 @@ public class Scooter implements IScooter {
     @Override
     public void setModel(ScooterModel model) { this.model = model; }
     @Override
-    public LocalDateTime getVersion() { return version; }
+    public Timestamp getVersion() { return version; }
     @Override
-    public void setVersion(LocalDateTime version) { this.version = version; }
+    public void setVersion(Timestamp version) { this.version = version; }
 
     @Override
     public String toString() {

@@ -3,6 +3,7 @@ package isel.sisinf.model.interfaces;
 import isel.sisinf.model.Scooter;
 import isel.sisinf.model.Station;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public interface IDock {
@@ -18,6 +19,6 @@ public interface IDock {
     public Scooter getScooter();
     public void setScooter(Scooter scooter);
 
-    public LocalDateTime getVersion();
-    public void setVersion(LocalDateTime version);
+    public Timestamp getVersion();
+    public void setVersion(Timestamp version);
 }

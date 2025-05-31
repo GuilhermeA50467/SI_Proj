@@ -3,6 +3,7 @@ package isel.sisinf.model.interfaces;
 import isel.sisinf.model.ScooterModel;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public interface IScooter {
@@ -21,7 +22,7 @@ public interface IScooter {
     public ScooterModel getModel();
     public void setModel(ScooterModel model);
 
-    public LocalDateTime getVersion();
+    public Timestamp getVersion();
 
-    public void setVersion(LocalDateTime version);
+    public void setVersion(Timestamp version);
 }

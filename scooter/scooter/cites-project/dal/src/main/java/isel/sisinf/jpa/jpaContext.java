@@ -1,5 +1,6 @@
 package isel.sisinf.jpa;
 
+import isel.sisinf.jpa.repositorys.RepositoryDock;
 import isel.sisinf.jpa.repositorys.RepositoryRider;
 import isel.sisinf.jpa.repositorys.RepositoryStation;
 import isel.sisinf.jpa.repositorys.RepositoryTravel;
@@ -10,12 +11,14 @@ public class jpaContext {
     private final RepositoryRider repositoryRider;
     private final RepositoryStation repositoryStation;
     private final RepositoryTravel repositoryTravel;
+    private final RepositoryDock repositoryDock;
 
     public jpaContext(EntityManager em) {
         this.em = em;
         this.repositoryRider = new RepositoryRider(em);
         this.repositoryStation = new RepositoryStation(em);
         this.repositoryTravel = new RepositoryTravel(em);
+        this.repositoryDock = new RepositoryDock(em);
     }
 
     public RepositoryRider getRepositoryRider() {
@@ -27,6 +30,8 @@ public class jpaContext {
     }
 
     public RepositoryTravel getRepositoryTravel() {return repositoryTravel;}
+
+    public RepositoryDock getRepositoryDock() {return repositoryDock;}
 
 
     public void beginTransaction() {

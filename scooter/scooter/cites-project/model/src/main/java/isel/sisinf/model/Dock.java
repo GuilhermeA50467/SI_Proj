@@ -3,6 +3,7 @@ package isel.sisinf.model;
 import isel.sisinf.model.interfaces.IDock;
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -26,12 +27,13 @@ public class Dock implements IDock {
     @JoinColumn(name = "scooter")
     private Scooter scooter;
 
+    @Version
     @Column(name = "version", nullable = true)
-    private LocalDateTime version;
+    private Timestamp version;
 
     public Dock() {}
 
-    public Dock(Station station, String state, Scooter scooter, LocalDateTime version) {
+    public Dock(Station station, String state, Scooter scooter, Timestamp version) {
         this.station = station;
         this.state = state;
         this.scooter = scooter;
@@ -56,9 +58,9 @@ public class Dock implements IDock {
     @Override
     public void setScooter(Scooter scooter) { this.scooter = scooter; }
     @Override
-    public LocalDateTime getVersion() { return version; }
+    public Timestamp getVersion() { return version; }
     @Override
-    public void setVersion(LocalDateTime version) { this.version = version; }
+    public void setVersion(Timestamp version) { this.version = version; }
 
     @Override
     public String toString() {

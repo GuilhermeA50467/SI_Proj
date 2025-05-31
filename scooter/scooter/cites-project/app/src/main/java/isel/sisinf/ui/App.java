@@ -23,6 +23,7 @@ SOFTWARE.
 */
 package isel.sisinf.ui;
 
+import isel.sisinf.jpa.ServicesData.DataDock;
 import isel.sisinf.jpa.ServicesData.DataTravel;
 import isel.sisinf.jpa.jpaContext;
 import isel.sisinf.jpa.repositorys.RepositoryRider;
@@ -39,13 +40,13 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 /**
- * 
- * Didactic material to support 
- * to the curricular unit of 
- * Introduction to Information Systems 
+ *
+ * Didactic material to support
+ * to the curricular unit of
+ * Introduction to Information Systems
  *
  * The examples may not be complete and/or totally correct.
- * They are made available for teaching and learning purposes and 
+ * They are made available for teaching and learning purposes and
  * any inaccuracies are the subject of debate.
  */
 
@@ -72,7 +73,7 @@ class UI
         about
     }
     private static UI __instance = null;
-  
+
     private HashMap<Option,DbWorker> __dbMethods;
 
     private UI()
@@ -80,7 +81,7 @@ class UI
         // DO NOT CHANGE ANYTHING!
         __dbMethods = new HashMap<Option,DbWorker>();
         __dbMethods.put(Option.createCostumer, () -> UI.this.createCostumer());
-        __dbMethods.put(Option.listCostumer, () -> UI.this.listCostumer()); 
+        __dbMethods.put(Option.listCostumer, () -> UI.this.listCostumer());
         __dbMethods.put(Option.listDocks, () -> UI.this.listDocks());
         __dbMethods.put(Option.startTrip, new DbWorker() {public void doWork() {UI.this.startTrip();}});
         __dbMethods.put(Option.parkScooter, new DbWorker() {public void doWork() {UI.this.parkScooter();}});
@@ -121,7 +122,7 @@ class UI
         {
             //nothing to do.
         }
-        
+
         return option;
 
     }
@@ -155,14 +156,14 @@ class UI
     }
 
     /**
-    To implement from this point forward. 
-    -------------------------------------------------------------------------------------     
+    To implement from this point forward.
+    -------------------------------------------------------------------------------------
         IMPORTANT:
     --- DO NOT MESS WITH THE CODE ABOVE. YOU JUST HAVE TO IMPLEMENT THE METHODS BELOW ---
-    --- Other Methods and properties can be added to support implementation. 
+    --- Other Methods and properties can be added to support implementation.
     ---- Do that also below                                                         -----
     -------------------------------------------------------------------------------------
-    
+
     */
 
     private static final int TAB_SIZE = 24;
@@ -181,7 +182,6 @@ class UI
         }
     }
 
-    //BALISTICO ESTE
     private void listCostumer() {
         RepositoryRider riderRepo = context.getRepositoryRider();
         try {
@@ -195,14 +195,16 @@ class UI
             System.err.println("Error listing customers: " + e.getMessage());
         }
     }
-    //BALISTICO ESTE
+
     private void listDocks() {
         RepositoryStation stationRepo = context.getRepositoryStation();
-        Map<Station, BigDecimal> occupancyMap =stationRepo.getOccupancy();
+        Map<Station, BigDecimal> occupancyMap = stationRepo.getOccupancy();
+
         try {
             occupancyMap.forEach((station, occupancy) -> {
                 System.out.printf("Dock ID: %d,Occupancy: %.2f%%\n", station.getId(), occupancy);
             });
+
         } catch (Exception e) {
             System.err.println("Erro ao listar docas: " + e.getMessage());
             e.printStackTrace();
@@ -224,16 +226,22 @@ class UI
         }
     }
 
-    private void parkScooter()
-    {
-        // TODO
-        System.out.println("parkScooter()");
-        
+    private void parkScooter() {
+        try {
+            int[] dockScooterIds = DataDock.readDockScooterInput();
+
+            context.beginTransaction();
+            context.getRepositoryDock().placeScooterInDock(dockScooterIds[0], dockScooterIds[1]);
+            context.commitTransaction();
+
+            System.out.println("Scooter colocada com sucesso na doca " + dockScooterIds[0]);
+        } catch (Exception e) {
+            if (context.isTransactionActive()) context.rollbackTransaction();
+            System.err.println("Erro ao colocar scooter na doca: " + e.getMessage());
+        }
     }
 
-    private void about()
-    {
-        // TODO: Add your Group ID & member names
+    private void about() {
         System.out.println("CITES Management DEMO");
         System.out.println("Group ID: 05");
         System.out.println("Members:");
@@ -242,16 +250,6 @@ class UI
         System.out.println("Andre Nunes, nº51766");
         System.out.println("DAL version:"+ isel.sisinf.jpa.Dal.version());
         System.out.println("Core version:"+ isel.sisinf.model.Core.version());
-        
-    }
-
-    static String inputData(String str, Boolean show){
-        java.util.Scanner key = new Scanner(System.in);
-        if(show) System.out.print("Enter corresponding values, separated by commas of: \n");
-        System.out.print(str);
-        System.out.print(">");
-        String values = key.nextLine();
-        return values;
     }
 
     public void closeResources() {

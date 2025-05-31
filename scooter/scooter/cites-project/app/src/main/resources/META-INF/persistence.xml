@@ -6,6 +6,9 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>isel.sisinf.model.Rider</class>
         <class>isel.sisinf.model.Station</class>
+        <class>isel.sisinf.model.Dock</class>
+        <class>isel.sisinf.model.Scooter</class>
+        <class>isel.sisinf.model.ScooterModel</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
 
         <properties>

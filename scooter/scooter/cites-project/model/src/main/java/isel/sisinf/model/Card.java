@@ -31,7 +31,7 @@ public class Card implements ICard {
     public Card() {}
 
     public Card(BigDecimal credit, TypeOfCard typeofcard, Client client) {
-        this.credit = credit;
+        setCredit(credit);
         this.typeofcard = typeofcard;
         this.client = client;
     }
@@ -43,8 +43,15 @@ public class Card implements ICard {
     public void setId(int id) { this.id = id; }
     @Override
     public BigDecimal getCredit() { return credit; }
+
     @Override
-    public void setCredit(BigDecimal credit) { this.credit = credit; }
+    public void setCredit(BigDecimal credit) {
+        if (credit.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Credit não pode ser negativo.");
+        }
+        this.credit = credit;
+    }
+
     @Override
     public TypeOfCard getTypeofcard() { return typeofcard; }
     @Override

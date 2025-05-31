@@ -28,24 +28,41 @@ public class TypeOfCard implements ITypeOfCard {
     public TypeOfCard() {}
 
     public TypeOfCard(String reference, int nodays, BigDecimal price) {
-        this.reference = reference;
-        this.nodays = nodays;
-        this.price = price;
+        setReference(reference);
+        setNodays(nodays);
+        setPrice(price);
     }
 
     // Getters and Setters
     @Override
     public String getReference() { return reference; }
+
     @Override
-    public void setReference(String reference) { this.reference = reference; }
+    public void setReference(String reference) {
+        if(!"resident".equalsIgnoreCase(reference) && !"tourist".equalsIgnoreCase(reference)){
+            throw new IllegalArgumentException("Referência inválida, deve ser 'resident' ou 'tourist'.");
+        }
+        this.reference = reference.toLowerCase();
+    }
+
     @Override
     public int getNodays() { return nodays; }
     @Override
-    public void setNodays(int nodays) { this.nodays = nodays; }
+    public void setNodays(int nodays) {
+        if(nodays <= 0){
+            throw new IllegalArgumentException("Número de dias deve ser positivo.");
+        }
+        this.nodays = nodays;
+    }
     @Override
     public BigDecimal getPrice() { return price; }
     @Override
-    public void setPrice(BigDecimal price) { this.price = price; }
+    public void setPrice(BigDecimal price) {
+        if (price.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Preço deve ser positivo.");
+        }
+        this.price = price;
+    }
 
     // Utility methods
     @Override

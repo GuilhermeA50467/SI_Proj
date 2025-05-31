@@ -22,14 +22,14 @@ public class Person implements IPerson {
     @Column(name = "taxnumber", unique = true)
     private Integer taxNumber;
 
-    @Column(nullable = false, name ="name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     // Constructors
     public Person() {}
 
     public Person(String email, Integer taxnumber, String name) {
-        this.email = email;
+        setEmail(email);
         this.taxNumber = taxnumber;
         this.name = name;
     }
@@ -41,12 +41,25 @@ public class Person implements IPerson {
     public void setId(int id) { this.id = id; }
     @Override
     public String getEmail() { return email; }
+
     @Override
-    public void setEmail(String email) { this.email = email; }
+    public void setEmail(String email) {
+        if(!email.contains("@")){
+            throw new IllegalArgumentException("Email inválido por não ter '@'");
+        }
+        this.email = email;
+    }
     @Override
     public Integer getTaxNumber() { return taxNumber; }
+
     @Override
-    public void setTaxNumber(Integer taxNumber) { this.taxNumber = taxNumber; }
+    public void setTaxNumber(Integer taxNumber) {
+        if(String.valueOf(taxNumber).length() != 9){
+            throw new IllegalArgumentException("O NIF deve ter exatamente 9 dígitos");
+        }
+        this.taxNumber = taxNumber;
+    }
+
     @Override
     public String getName() { return name; }
     @Override

@@ -9,6 +9,8 @@
         <class>isel.sisinf.model.Dock</class>
         <class>isel.sisinf.model.Scooter</class>
         <class>isel.sisinf.model.ScooterModel</class>
+        <class>isel.sisinf.model.Client</class>
+        <class>isel.sisinf.model.Person</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
 
         <properties>

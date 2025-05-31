@@ -27,10 +27,10 @@ public class ReplacementOrder implements IReplacementOrder {
     public ReplacementOrder() {}
 
     public ReplacementOrder(LocalDateTime dorder, LocalDateTime dreplacement, int roccupation, Station station) {
-        this.id = new ReplacementOrderId(dorder, station.getId());
-        this.dreplacement = dreplacement;
-        this.roccupation = roccupation;
         this.station = station;
+        this.id = new ReplacementOrderId(dorder, station.getId());
+        setDreplacement(dreplacement);
+        setRoccupation(roccupation);
     }
 
     @Override
@@ -43,6 +43,9 @@ public class ReplacementOrder implements IReplacementOrder {
     }
     @Override
     public void setDreplacement(LocalDateTime dreplacement) {
+        if (dreplacement != null && dreplacement.isBefore(id.getDorder())) {
+            throw new IllegalArgumentException("dreplacement deve ser maior que dorder ou null");
+        }
         this.dreplacement = dreplacement;
     }
     @Override
@@ -51,6 +54,9 @@ public class ReplacementOrder implements IReplacementOrder {
     }
     @Override
     public void setRoccupation(int roccupation) {
+        if (roccupation < 0 || roccupation > 100) {
+            throw new IllegalArgumentException("roccupation deve estar entre 0 e 100");
+        }
         this.roccupation = roccupation;
     }
     @Override

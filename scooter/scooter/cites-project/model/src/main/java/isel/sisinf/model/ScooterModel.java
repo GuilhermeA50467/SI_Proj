@@ -4,6 +4,7 @@ import isel.sisinf.model.interfaces.IScooterModel;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -26,7 +27,7 @@ public class ScooterModel implements IScooterModel {
 
     public ScooterModel(String designation, int autonomy) {
         this.designation = designation;
-        this.autonomy = autonomy;
+        setAutonomy(autonomy);
     }
 
     // Getters and setters
@@ -40,8 +41,14 @@ public class ScooterModel implements IScooterModel {
     public void setDesignation(String designation) { this.designation = designation; }
     @Override
     public int getAutonomy() { return autonomy; }
+
     @Override
-    public void setAutonomy(int autonomy) { this.autonomy = autonomy; }
+    public void setAutonomy(int autonomy) {
+        if (autonomy <= 0) {
+            throw new IllegalArgumentException("Autonomy deve ser positiva.");
+        }
+        this.autonomy = autonomy;
+    }
 
     // Utils
     @Override

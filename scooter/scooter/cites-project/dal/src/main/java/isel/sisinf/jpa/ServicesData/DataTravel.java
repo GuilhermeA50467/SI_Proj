@@ -13,7 +13,7 @@ public class DataTravel {
     private static String inputData(String prompt, boolean show) {
         Scanner scanner = new Scanner(System.in);
         if (show) System.out.println("Enter corresponding values, separated by commas of:");
-        System.out.print(prompt + ">");
+        System.out.print(prompt);
         return scanner.nextLine();
     }
 }

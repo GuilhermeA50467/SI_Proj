@@ -7,7 +7,7 @@ public class DataDock {
     private static String inputData(String prompt, boolean show) {
         Scanner key = new Scanner(System.in);
         if (show) System.out.print("Enter corresponding values:\n");
-        System.out.print(prompt + " > ");
+        System.out.print(prompt);
         return key.nextLine();
     }
 

@@ -1,5 +1,6 @@
 package isel.sisinf.model.interfaces;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public interface IRider {
@@ -21,8 +22,8 @@ public interface IRider {
     public int getCardid();
     public void setCardid(int cardid);
 
-    public double getCredit();
-    public void setCredit(double credit);
+    public BigDecimal getCredit();
+    public void setCredit(BigDecimal credit);
 
     public String getTypeofcard();
     public void setTypeofcard(String typeofcard);

@@ -228,13 +228,13 @@ class UI
 
     private void parkScooter() {
         try {
-            int[] dockScooterIds = DataDock.readDockScooterInput();
+            int[] dockAndScooterIds = DataDock.readDockScooterInput();
 
             context.beginTransaction();
-            context.getRepositoryDock().placeScooterInDock(dockScooterIds[0], dockScooterIds[1]);
+            context.getRepositoryDock().placeScooterInDock(dockAndScooterIds[0], dockAndScooterIds[1]);
             context.commitTransaction();
 
-            System.out.println("Scooter colocada com sucesso na doca " + dockScooterIds[0]);
+            System.out.println("Scooter colocada com sucesso na doca " + dockAndScooterIds[0]);
         } catch (Exception e) {
             if (context.isTransactionActive()) context.rollbackTransaction();
             System.err.println("Erro ao colocar scooter na doca: " + e.getMessage());

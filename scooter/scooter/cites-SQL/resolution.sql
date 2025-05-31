@@ -193,11 +193,15 @@ CREATE OR REPLACE PROCEDURE startTrip(dockid integer, clientid  integer)
 as $$
 DECLARE
 scooter_id integer;
+station_id integer;
 BEGIN
-select scooter into scooter_id from dock where number = dockid and state = 'occupy'; -- Nao sei se é preciso o state = 'occupy'
+SELECT scooter, station
+INTO scooter_id, station_id
+FROM dock
+WHERE number = dockid AND state = 'occupy';
 --nova viagem
 insert into travel (dinitial, comment, evaluation, dfinal, client, scooter, stinitial, stfinal)
-values (NOW(), NULL, NULL, NULL, clientid, scooter_id, dockid, NULL);
+values (NOW(), NULL, NULL, NULL, clientid, scooter_id, station_id, NULL);
 
 update dock set
                 scooter = NULL,

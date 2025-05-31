@@ -4,6 +4,7 @@ import isel.sisinf.model.Rider;
 import jakarta.persistence.EntityManager;
 
 public class RepositoryRider extends AbstractRepository<Rider, Integer> {
+
     public RepositoryRider(EntityManager em) {
         super(em, Rider.class);
     }

@@ -45,9 +45,9 @@ public class Travel implements ITravel {
     public Travel(LocalDateTime dinitial, String comment, Integer evaluation, LocalDateTime dfinal,
                   Client client, Scooter scooter, Station stinitial, Station stfinal) {
         this.id = new TravelId(dinitial, scooter.getId());
-        this.comment = comment;
-        this.evaluation = evaluation;
-        this.dfinal = dfinal;
+        setComment(comment);
+        setEvaluation(evaluation);
+        setDfinal(dfinal);
         this.client = client;
         this.scooter = scooter;
         this.stinitial = stinitial;
@@ -57,19 +57,41 @@ public class Travel implements ITravel {
     @Override
     public LocalDateTime getDinitial() {return id.getDinitial();}
     @Override
-    public void setDinitial(LocalDateTime dinitial) {this.id.setDinitial(dinitial);}
+    public void setDinitial(LocalDateTime dinitial) {
+        this.id.setDinitial(dinitial);
+        if (dfinal != null && dfinal.isBefore(dinitial)) {
+            throw new IllegalArgumentException("dfinal deve ser maior que dinitial");
+        }
+    }
     @Override
     public String getComment() {return comment;}
     @Override
-    public void setComment(String comment) {this.comment = comment;}
+    public void setComment(String comment) {
+        this.comment = comment;
+        validateCommentEvaluationConsistency();
+    }
     @Override
     public Integer getEvaluation() {return evaluation;}
+
     @Override
-    public void setEvaluation(Integer evaluation) {this.evaluation = evaluation;}
+    public void setEvaluation(Integer evaluation) {
+        if (evaluation != null && (evaluation < 1 || evaluation > 5)) {
+            throw new IllegalArgumentException("evaluation deve estar entre 1 e 5 ou ser null");
+        }
+        this.evaluation = evaluation;
+    }
+
     @Override
     public LocalDateTime getDfinal() {return dfinal;}
+
     @Override
-    public void setDfinal(LocalDateTime dfinal) {this.dfinal = dfinal;}
+    public void setDfinal(LocalDateTime dfinal) {
+        if (dfinal != null && dfinal.isBefore(id.getDinitial())) {
+            throw new IllegalArgumentException("dfinal deve ser maior que dinitial ou null");
+        }
+        this.dfinal = dfinal;
+    }
+
     @Override
     public Client getClient() {return client;}
     @Override
@@ -107,5 +129,11 @@ public class Travel implements ITravel {
             return false;
         Travel other = (Travel) obj;
         return id.equals(other.id);
+    }
+
+    private void validateCommentEvaluationConsistency() {
+        if ((comment == null && evaluation != null) || (comment != null && evaluation == null)) {
+            throw new IllegalArgumentException("comment e evaluation devem ser ambos null ou ambos preenchidos");
+        }
     }
 }

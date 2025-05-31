@@ -40,7 +40,7 @@ public class Replacement implements IReplacement {
     public Replacement(int number, LocalDateTime dreplacement, String action, ReplacementOrder reporder, int repstation, Employee employee) {
         this.number = number;
         this.dreplacement = dreplacement;
-        this.action = action;
+        setAction(action);
         this.reporder = reporder;
         this.repstation = repstation;
         this.employee = employee;
@@ -68,6 +68,9 @@ public class Replacement implements IReplacement {
     }
     @Override
     public void setAction(String action) {
+        if (!action.equals("inplace") && !action.equals("remove")) {
+            throw new IllegalArgumentException("Action inválido: " + action);
+        }
         this.action = action;
     }
     @Override

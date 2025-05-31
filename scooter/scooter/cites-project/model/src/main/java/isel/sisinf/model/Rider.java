@@ -3,6 +3,8 @@ package isel.sisinf.model;
 
 import isel.sisinf.model.interfaces.IRider;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -25,13 +27,13 @@ public class Rider implements IRider {
     @Column(name ="cardid")
     private int cardid;
     @Column(name ="credit")
-    private double credit;
+    private BigDecimal credit;
     @Column(name ="typeofcard")
     private String typeofcard;
 
     public Rider() {}
 
-    public Rider(int id, String email, int taxnumber, String name, LocalDateTime dtregister, int cardid, double credit, String typeofcard) {
+    public Rider(int id, String email, int taxnumber, String name, LocalDateTime dtregister, int cardid, BigDecimal credit, String typeofcard) {
         this.id = id;
         this.email = email;
         this.taxnumber = taxnumber;
@@ -49,12 +51,24 @@ public class Rider implements IRider {
     public void setId(int id) { this.id = id; }
     @Override
     public String getEmail() { return email; }
+
     @Override
-    public void setEmail(String email) { this.email = email; }
+    public void setEmail(String email) {
+        if(!email.contains("@")){
+            throw new IllegalArgumentException("Email inválido por não ter '@'");
+        }
+        this.email = email;
+    }
+
     @Override
     public int getTaxnumber() { return taxnumber; }
     @Override
-    public void setTaxnumber(int taxnumber) { this.taxnumber = taxnumber; }
+    public void setTaxnumber(int taxnumber) {
+        if(String.valueOf(taxnumber).length() != 9){
+            throw new IllegalArgumentException("O NIF deve ter exatamente 9 dígitos");
+        }
+        this.taxnumber = taxnumber;
+    }
     @Override
     public String getName() { return name; }
     @Override
@@ -68,13 +82,26 @@ public class Rider implements IRider {
     @Override
     public void setCardid(int cardid) { this.cardid = cardid; }
     @Override
-    public double getCredit() { return credit; }
+    public BigDecimal getCredit() { return credit; }
+
     @Override
-    public void setCredit(double credit) { this.credit = credit; }
+    public void setCredit(BigDecimal credit) {
+        if (credit.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Credit não pode ser negativo.");
+        }
+        this.credit = credit;
+    }
+
     @Override
     public String getTypeofcard() { return typeofcard; }
+
     @Override
-    public void setTypeofcard(String typeofcard) { this.typeofcard = typeofcard; }
+    public void setTypeofcard(String typeofcard) {
+        if(!"resident".equalsIgnoreCase(typeofcard) && !"tourist".equalsIgnoreCase(typeofcard)){
+            throw new IllegalArgumentException("Referência inválida, deve ser 'resident' ou 'tourist'.");
+        }
+        this.typeofcard = typeofcard;
+    }
 
     @Override
     public String toString() {

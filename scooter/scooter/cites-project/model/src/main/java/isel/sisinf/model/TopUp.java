@@ -4,6 +4,7 @@ package isel.sisinf.model;
 import isel.sisinf.model.interfaces.ITopUp;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -23,14 +24,14 @@ public class TopUp implements ITopUp {
     private Card card;
 
     @Column(name = "value", nullable = false)
-    private double value;
+    private BigDecimal value;
 
     public TopUp() {}
 
-    public TopUp(LocalDateTime dttopup, Card card, double value) {
+    public TopUp(LocalDateTime dttopup, Card card, BigDecimal value) {
         this.id = new TopUpId(dttopup, card.getId());
         this.card = card;
-        this.value = value;
+        setValue(value);
     }
 
     @Override
@@ -50,11 +51,14 @@ public class TopUp implements ITopUp {
         this.card = card;
     }
     @Override
-    public double getValue() {
+    public BigDecimal getValue() {
         return value;
     }
     @Override
-    public void setValue(double value) {
+    public void setValue(BigDecimal value) {
+        if (value.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Value deve ser positivo.");
+        }
         this.value = value;
     }
 

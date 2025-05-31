@@ -35,7 +35,7 @@ public class Dock implements IDock {
 
     public Dock(Station station, String state, Scooter scooter, Timestamp version) {
         this.station = station;
-        this.state = state;
+        setState(state);
         this.scooter = scooter;
         this.version = version;
     }
@@ -52,7 +52,12 @@ public class Dock implements IDock {
     @Override
     public String getState() { return state; }
     @Override
-    public void setState(String state) { this.state = state; }
+    public void setState(String state) {
+        if (!state.equals("free") && !state.equals("occupy") && !state.equals("under maintenance")) {
+            throw new IllegalArgumentException("Estado inválido: " + state);
+        }
+        this.state = state;
+    }
     @Override
     public Scooter getScooter() { return scooter; }
     @Override

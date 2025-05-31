@@ -37,9 +37,9 @@ public class Scooter implements IScooter {
     public Scooter() {}
 
     public Scooter(BigDecimal weight, BigDecimal maxvelocity, int battery, ScooterModel model, Timestamp version) {
-        this.weight = weight;
-        this.maxVelocity = maxvelocity;
-        this.battery = battery;
+        setWeight(weight);
+        setMaxVelocity(maxvelocity);
+        setBattery(battery);
         this.model = model;
         this.version = version;
     }
@@ -51,16 +51,34 @@ public class Scooter implements IScooter {
     public void setId(int id) { this.id = id; }
     @Override
     public BigDecimal getWeight() { return weight; }
+
     @Override
-    public void setWeight(BigDecimal weight) { this.weight = weight; }
+    public void setWeight(BigDecimal weight) {
+        if (weight.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Weight deve ser positivo.");
+        }
+        this.weight = weight;
+    }
+
     @Override
     public BigDecimal getMaxVelocity() { return maxVelocity; }
+
     @Override
-    public void setMaxVelocity(BigDecimal maxVelocity) { this.maxVelocity = maxVelocity; }
+    public void setMaxVelocity(BigDecimal maxVelocity) {
+        if (maxVelocity.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("maxVelocity deve ser positiva.");
+        }
+        this.maxVelocity = maxVelocity;
+    }
     @Override
     public int getBattery() { return battery; }
     @Override
-    public void setBattery(int battery) { this.battery = battery; }
+    public void setBattery(int battery) {
+        if(battery <= 0){
+            throw new IllegalArgumentException("Battery deve ser positiva");
+        }
+        this.battery = battery;
+    }
     @Override
     public ScooterModel getModel() { return model; }
     @Override

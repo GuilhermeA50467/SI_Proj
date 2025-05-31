@@ -14,6 +14,7 @@ public class RepositoryStation extends AbstractRepository<Station, Integer> {
         super(em, Station.class);
     }
 
+
     public Map<Station, BigDecimal> getOccupancy() {
         String jpql = "SELECT s, FUNCTION('fx_dock_occupancy', s.id) FROM Station s";
 

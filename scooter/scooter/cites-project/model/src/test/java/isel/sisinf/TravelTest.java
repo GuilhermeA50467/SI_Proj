@@ -15,7 +15,7 @@ public class TravelTest {
     public void testConstructorAndGetters() {
         LocalDateTime start = LocalDateTime.of(2023, 1, 1, 10, 0);
         LocalDateTime end = LocalDateTime.of(2023, 1, 1, 12, 0);
-        Client client = new Client();  // assumindo construtor padrão
+        Client client = new Client();
         Scooter scooter = new Scooter();
         scooter.setId(100);
         Station startStation = new Station();

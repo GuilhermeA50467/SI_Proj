@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
+@Table(name = "STATION")
 @NamedStoredProcedureQuery(
         name = "FUNC",
         procedureName = "fx_dock_occupancy",
@@ -16,7 +17,6 @@ import java.util.Objects;
                 @StoredProcedureParameter(mode = ParameterMode.OUT,type = Number.class),
         }
 )
-@Table(name = "STATION")
 public class Station implements IStation {
 
     @Id

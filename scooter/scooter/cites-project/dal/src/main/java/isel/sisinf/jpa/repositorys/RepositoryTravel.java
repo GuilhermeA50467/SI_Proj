@@ -4,6 +4,7 @@ import isel.sisinf.jpa.AbstractRepository;
 import isel.sisinf.model.Client;
 import isel.sisinf.model.Travel;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.ParameterMode;
 import jakarta.persistence.StoredProcedureQuery;
 
 public class RepositoryTravel extends AbstractRepository<Travel, Integer> {
@@ -16,18 +17,15 @@ public class RepositoryTravel extends AbstractRepository<Travel, Integer> {
 
         Client cliente = em.find(Client.class, clientId);
 
-        if(cliente == null){
+        if(cliente == null) {
             throw new IllegalArgumentException("Cliente com ID " + clientId + " não existe");
         }
 
-        StoredProcedureQuery query = em.createStoredProcedureQuery("startTrip");
-
-        query.registerStoredProcedureParameter(1, Integer.class, jakarta.persistence.ParameterMode.IN);
-        query.registerStoredProcedureParameter(2, Integer.class, jakarta.persistence.ParameterMode.IN);
-
-        query.setParameter(1, dockId);
-        query.setParameter(2, clientId);
-
+        StoredProcedureQuery query = em.createNamedStoredProcedureQuery("startTripProcedure");
+        query.setParameter("dockid", dockId);
+        query.setParameter("clientid", clientId);
         query.execute();
+
+
     }
 }

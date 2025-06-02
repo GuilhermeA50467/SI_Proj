@@ -10,6 +10,14 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "TRAVEL")
+@NamedStoredProcedureQuery(
+        name = "startTripProcedure",
+        procedureName = "startTrip",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "dockid", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "clientid", type = Integer.class)
+        }
+)
 public class Travel implements ITravel {
 
     @EmbeddedId

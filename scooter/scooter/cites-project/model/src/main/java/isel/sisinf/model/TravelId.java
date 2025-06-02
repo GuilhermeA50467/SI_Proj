@@ -11,7 +11,7 @@ public class TravelId implements Serializable {
     @Column(name = "dinitial")
     private LocalDateTime dinitial;
 
-    @Column(name = "scooter")
+    @Column(name = "scooter", insertable = false, updatable = false) // cópia do campo scooter que serve só para ler ( para compor a PK )
     private int scooterId;
 
     public TravelId() {}

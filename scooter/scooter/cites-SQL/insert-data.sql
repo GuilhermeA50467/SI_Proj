@@ -1,217 +1,133 @@
-/*
- *   ISEL-DEETC-SisInf
- *   ND 2022-2025
+/**
+ * MIT License
+ * Copyright (c) 2025, Matilde Pato, ISEL-DEETC
  *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- *   Information Systems Project - Active Databases
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
  *
- */
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+*/
 
-/* ### DO NOT REMOVE THE QUESTION MARKERS ### */
+/**
+ *
+ * Didactic material to support
+ * the Information Systems course
+ *
+ * The examples may not be complete and/or totally correct.
+ * They are made available for teaching purposes and
+ * Any inaccuracies are the subject of discussion in classes.
+ * */
 
---funcao para ver os triggers que temos
-SELECT event_object_table AS tabela,
-       trigger_name,
-       action_timing AS quando,
-       event_manipulation AS evento
-FROM information_schema.triggers;
-drop TRIGGER  update_rider_instead on rider;
--- region Question 1.a
-CREATE OR REPLACE FUNCTION trigger_scooter_is_on_the_dock()
-RETURNS TRIGGER AS $$
-BEGIN
-	IF not exists (
-		SELECT 1 FROM dock WHERE scooter = new.scooter and state = 'occupy'
-	)
-	THEN
-		RAISE EXCEPTION 'Nao pode ser reservada a viagem pois essa trotinete nao esta presente numa doca';
-END IF;
-RETURN NEW; -- retorna tuplo inserido
-END;
-$$ LANGUAGE plpgsql;
+begin;
+-- Insert sample TYPEOFCARD data
+INSERT INTO TYPEOFCARD (reference, nodays, price) VALUES
+('resident', 365, 29.99),
+('tourist', 7, 9.99);
 
-CREATE TRIGGER  trigger_scooter_is_on_the_dock
-    BEFORE INSERT ON Travel
-    FOR EACH ROW
-    EXECUTE FUNCTION  trigger_scooter_is_on_the_dock()
+-- Insert sample PERSON data
+INSERT INTO PERSON (email, taxnumber, name) VALUES
+('john.doe@email.com', 123456789, 'John Doe'),
+('jane.smith@email.com', 987654321, 'Jane Smith'),
+('bob.wilson@email.com', 456789123, 'Bob Wilson'),
+('alice.johnson@email.com', 789123456, 'Alice Johnson'),
+('emma.brown@email.com', 321654987, 'Emma Brown'),
+('mike.davis@email.com', 654987321, 'Mike Davis');
 
-INSERT INTO TRAVEL (dinitial, comment, evaluation, dfinal, client, scooter, stinitial, stfinal)
-VALUES ('2025-05-01 10:00:00', 'Viagem de teste', 5, '2025-05-01 10:30:00', 1, 6, 1, 2);
---TODO
--- endregion
---uma trotineta e um utilizador s´o podem participar numa ´unica viagem a decorrer.
--- region Question 1.b
-CREATE OR REPLACE FUNCTION trigger_scooter_and_client_is_availabe()
-RETURNS TRIGGER AS $$
-BEGIN
-    -- verifica se client and trotinete ja existem em travel
-    if exists (
-		select 1 from travel where client = new.client and scooter = new.scooter
-	) then
-		if exists(
-        --nao pode existir duas viagens em simultaneo para o mesmo cliente ou para a mesma trotineta
-			SELECT 1 FROM travel WHERE dfinal IS NULL AND (client = NEW.client OR scooter = NEW.scooter )
-		)
-	THEN
-		RAISE EXCEPTION 'Nao foi possivel reservar uma viagem pois o cliente ou uma trotinete estao ja numa viagem';
-end if;
-end if;
-RETURN NEW; -- retorna tuplo inserido
-END;
-$$ LANGUAGE plpgsql;
+-- Insert sample client data
+INSERT INTO CLIENT (person, dtregister) VALUES
+(1, '2025-01-01 10:00:00'),
+(2, '2025-01-02 11:30:00'),
+(3, '2025-01-03 14:15:00'),
+(4, '2025-01-04 09:45:00');
 
-CREATE TRIGGER  trigger_scooter_and_client_is_availabe
-    BEFORE INSERT ON TRAVEL
-    FOR EACH ROW
-    EXECUTE FUNCTION  trigger_scooter_and_client_is_availabe()
+-- Insert sample EMPLOYEE data
+INSERT INTO EMPLOYEE (person) VALUES
+(5),
+(6);
 
-INSERT INTO travel (dinitial, comment, evaluation, dfinal, client, scooter, stinitial, stfinal)
-VALUES ('2025-01-20 10:00:00', NULL, NULL, NULL, 1, 3, 1, NULL);
---TODO
--- endregion
+-- Insert sample CARD data
+INSERT INTO CARD (credit, typeofcard, client) VALUES
+(5.00, 'resident', 1),
+(7.50, 'resident', 2),
+(3.25, 'tourist', 3),
+(9.99, 'tourist', 4);
 
--- region Question 2
--- Quantas docas estão ocupadas em relação ao total de docas na estação---objetivooo nº dock state = 'ocuppy' / nº total de docas
-CREATE OR REPLACE function fx_dock_occupancy(stationkid integer)
-RETURNS numeric as $$
-declare
-totalDocks numeric;
-    occupyDocks numeric;
-    total numeric;
-begin
-	--contar numero total de docks
-select count(*) into totalDocks from dock where station = stationkid;
---contar numero de docks que estao com state = occupy
-select count(*) into occupyDocks from dock where station = stationkid  AND state = 'occupy';
-total:=occupyDocks/totalDocks;
-return total;
-end;
-$$ LANGUAGE plpgsql;
+-- Insert sample STATION data
+INSERT INTO STATION (latitude, longitude) VALUES
+(38.7371, -9.3027),  -- Lisbon area
+(38.7223, -9.1393),
+(38.7166, -9.1377),
+(38.7494, -9.1492);
 
-SELECT fx_dock_occupancy(3);
+-- Insert sample SCOOTERMODEL data
+INSERT INTO SCOOTERMODEL (designation, autonomy) VALUES
+('Basic Model', 25),
+('Premium Model', 35),
+('Pro Model', 45);
 
-CREATE OR REPLACE PROCEDURE sp_chama_fx_dock_occupancy(
-    IN stationkid INTEGER,
-    OUT occupancy_ratio NUMERIC
-)
-LANGUAGE plpgsql
-AS $$
-BEGIN
-    occupancy_ratio := fx_dock_occupancy(stationkid);
-END;
-$$;
+-- Insert sample SCOOTER data
+INSERT INTO SCOOTER (weight, maxvelocity, battery, model) VALUES
+(12.50, 25.00, 20, 1),
+(13.75, 30.00, 30, 2),
+(15.00, 35.00, 40, 3),
+(12.50, 25.00, 18, 1),
+(13.75, 30.00, 28, 2),
+(15.00, 35.00, 38, 3);
 
-CREATE OR REPLACE PROCEDURE pr_dock_occupancy(
-    IN stationkid INTEGER,
-    OUT occupancy NUMERIC
-)
-AS $$
-BEGIN
-    occupancy := fx_dock_occupancy(stationkid);
-END;
-$$ LANGUAGE plpgsql;
+-- Insert sample DOCK data
+INSERT INTO DOCK (station, state, scooter, version) VALUES
+(1, 'occupy', 1,NOW()),
+(1, 'free', NULL,NOW()),
+(1, 'under maintenance', NULL,NOW()),
+(2, 'occupy', 2,NOW()),
+(2, 'free', NULL,NOW()),
+(3, 'occupy', 3,NOW()),
+(3, 'under maintenance', NULL,NOW()),
+(4, 'occupy', 4,NOW()),
+(4, 'free', NULL,NOW());
 
-SELECT
-    routine_schema,
-    routine_name,
-    data_type
-FROM
-    information_schema.routines
-WHERE
-    routine_type = 'PROCEDURE'
-ORDER BY
-    routine_schema, routine_name;
---TODO
--- endregion
+-- Insert sample REPLACEMENTORDER data
+INSERT INTO REPLACEMENTORDER (dorder, dreplacement, roccupation, station) VALUES
+('2025-01-05 08:00:00', '2025-01-05 10:00:00', 85, 1),
+('2025-01-06 09:00:00', '2025-01-06 11:30:00', 90, 2),
+('2025-01-07 10:00:00', NULL, 75, 3),
+('2025-01-08 11:00:00', '2025-01-08 14:00:00', 95, 4);
 
--- region Question 3
-CREATE OR REPLACE VIEW RIDER
-AS
-SELECT p.*,c.dtregister,cd.id AS cardid,cd.credit,cd.typeofcard
-FROM CLIENT c INNER JOIN PERSON p ON (c.person=p.id)
-              INNER JOIN CARD cd ON (cd.client = c.person);
+-- Insert sample REPLACEMENT data
+INSERT INTO REPLACEMENT (dreplacement, action, reporder, repstation, employee) VALUES
+('2025-01-05 10:00:00', 'remove', '2025-01-05 08:00:00', 1, 5),
+('2025-01-06 11:30:00', 'inplace', '2025-01-06 09:00:00', 2, 6),
+('2025-01-08 14:00:00', 'remove', '2025-01-08 11:00:00', 4, 5);
 
---criar triggers INSTEAD OF pois permeite que facamos insert e neste caso updates a uma vista que tem varias tabelas
---E assim o update e insert funcionam como um insert so numa tabela.
-create or replace function rider_insert_trigger()
-returns trigger as $$
-declare
-person_id integer;
-begin
-insert into PERSON (name, taxnumber,email) values (NEW.name, NEW.taxnumber, NEW.email) returning id into person_id;
-insert into CLIENT (person, dtregister) values (person_id, NEW.dtregister);
-insert into CARD (client, credit, typeofcard) values (person_id, NEW.credit, NEW.typeofcard);
-return new;
-end;
-$$ language plpgsql;
+-- Insert sample TOPUP data
+INSERT INTO TOPUP (dttopup, card, value) VALUES
+('2025-01-10 12:00:00', 1, 10.00),
+('2025-01-11 13:00:00', 2, 15.00),
+('2025-01-12 14:00:00', 3, 20.00),
+('2025-01-13 15:00:00', 4, 25.00);
 
+-- Insert sample TRAVEL data
+INSERT INTO TRAVEL (dinitial, comment, evaluation, dfinal, client, scooter, stinitial, stfinal) VALUES
+('2025-01-15 10:00:00', 'Great ride!', 5, '2025-01-15 10:30:00', 1, 1, 1, 2),
+('2025-01-16 11:00:00', 'Good experience', 4, '2025-01-16 11:45:00', 2, 2, 2, 3),
+('2025-01-17 12:00:00', NULL, NULL, '2025-01-17 12:30:00', 3, 3, 3, 4),
+('2025-01-18 13:00:00', 'Battery died too quickly', 2, '2025-01-18 13:15:00', 4, 4, 4, 1);
 
-
-CREATE TRIGGER insert_rider_instead
-    INSTEAD OF INSERT ON RIDER
-    FOR EACH ROW
-    EXECUTE FUNCTION rider_insert_trigger();
-
-INSERT INTO RIDER (email, taxnumber, name, dtregister, credit, typeofcard)
-VALUES (
-           'ana.mendes@email.com', 112233445, 'Ana Mendes',
-           '2025-05-01 10:00:00', 10.00, 'resident'
-       );
-
-create or replace function rider_update_trigger()
-returns trigger AS $$
-begin
-update PERSON set
-                  name = new.name,
-                  taxnumber = new.taxnumber,
-                  email = new.email
-where id = old.id;
-
-update CLIENT set dtregister = new.dtregister where person = old.id;
-
-update CARD set
-                credit = new.credit,
-                typeofcard = new.typeofcard
-where client = old.id;
-
-return new;
-end;
-$$ language plpgsql;
-
-CREATE TRIGGER update_rider_instead
-    INSTEAD OF UPDATE ON RIDER
-    FOR EACH ROW
-    EXECUTE FUNCTION rider_update_trigger();
-
-UPDATE RIDER
-SET name = 'Ana S. Mendes',
-    credit = 15.00,
-    typeofcard = 'tourist'
-WHERE email = 'ana.mendes@email.com';
--- endregion
-
--- region Question 4
-CREATE OR REPLACE PROCEDURE startTrip(dockid integer, clientid  integer)
-as $$
-DECLARE
-scooter_id integer;
-station_id integer;
-BEGIN
-SELECT scooter, station
-INTO scooter_id, station_id
-FROM dock
-WHERE number = dockid AND state = 'occupy';
---nova viagem
-insert into travel (dinitial, comment, evaluation, dfinal, client, scooter, stinitial, stfinal)
-values (NOW(), NULL, NULL, NULL, clientid, scooter_id, station_id, NULL);
-
-update dock set
-                scooter = NULL,
-                state = 'free'
-WHERE number = dockid;
-END;
-$$ language plpgsql;
---nao testei,so falta isso
-CALL startTrip(1, 1);
---TODO
--- endregion
+-- Make sure SERVICECOST has exactly one row with the specified values
+TRUNCATE SERVICECOST;
+INSERT INTO SERVICECOST (unlock, usable) VALUES (1.00, 0.15);
+commit;

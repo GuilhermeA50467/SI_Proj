@@ -77,16 +77,18 @@ RETURNS numeric as $$
 declare
 totalDocks numeric;
     occupyDocks numeric;
+    total numeric;
 begin
 	--contar numero total de docks
 select count(*) into totalDocks from dock where station = stationkid;
 --contar numero de docks que estao com state = occupy
 select count(*) into occupyDocks from dock where station = stationkid  AND state = 'occupy';
-return occupyDocks/totalDocks;
+total:=occupyDocks/totalDocks;
+return total;
 end;
 $$ LANGUAGE plpgsql;
 
-SELECT fx_dock_occupancy(1);
+SELECT fx_dock_occupancy(3);
 
 CREATE OR REPLACE PROCEDURE sp_chama_fx_dock_occupancy(
     IN stationkid INTEGER,

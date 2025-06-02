@@ -15,20 +15,18 @@ public class DataRider {
     }
 
     public static Rider createRiderFromInput() {
+        Rider newRider = new Rider();
         String name = inputData("Nome: ", false);
         String email = inputData("Email: ", false);
-        int taxnumber = Integer.parseInt(inputData("Número de contribuinte (tax number): ", false));
-        double credit = Double.parseDouble(inputData("Crédito inicial: ", false));
-        String typeofcard = inputData("Tipo de cartão (resident / tourist): ", false);
-
-        Rider newRider = new Rider();
-        newRider.setName(name);
         newRider.setEmail(email);
+        int taxnumber = Integer.parseInt(inputData("Número de contribuinte (tax number): ", false));
         newRider.setTaxnumber(taxnumber);
+        double credit = Double.parseDouble(inputData("Crédito inicial: ", false));
         newRider.setCredit(BigDecimal.valueOf(credit));
+        String typeofcard = inputData("Tipo de cartão (resident / tourist): ", false);
         newRider.setTypeofcard(typeofcard);
+        newRider.setName(name);
         newRider.setDtregister(LocalDateTime.now());
-
         return newRider;
     }
 }

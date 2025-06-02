@@ -169,16 +169,16 @@ class UI
     private static final int TAB_SIZE = 24;
 
     private void createCostumer() {
-        Rider newRider = DataRider.createRiderFromInput();
-        RepositoryRider riderRepo = context.getRepositoryRider();
         try {
+            RepositoryRider riderRepo = context.getRepositoryRider();
+            Rider newRider = DataRider.createRiderFromInput();
             context.beginTransaction();
             riderRepo.create(newRider);
             context.commitTransaction();
             System.out.println("Rider criado com sucesso: " + newRider.getName());
-        } catch (Exception e) {
+        } catch (Throwable e) {
             if (context.isTransactionActive()) context.rollbackTransaction();
-            e.printStackTrace();
+            System.err.println("Erro ao criar cliente: " + e.getMessage());
         }
     }
 
@@ -219,10 +219,9 @@ class UI
             context.getRepositoryTravel().startTrip(inputTravel[0], inputTravel[1]);
             context.commitTransaction();
             System.out.println("Viagem iniciada com sucesso!");
-        } catch (Exception e) {
+        } catch (Throwable e) {
             if (context.isTransactionActive()) context.rollbackTransaction();
             System.err.println("Erro ao iniciar viagem: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -262,7 +261,7 @@ class UI
     }
 }
 
-public class App{
+public class    App{
 
     public static void main(String[] args) throws Exception{
         UI ui = UI.getInstance();

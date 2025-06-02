@@ -19,6 +19,7 @@ public abstract class AbstractRepository<T, K> implements IRepository<T, K> {
     @Override
     public T create(T entity) {
         em.persist(entity);
+        em.flush();
         return entity;
     }
 
@@ -30,6 +31,7 @@ public abstract class AbstractRepository<T, K> implements IRepository<T, K> {
     @Override
     public T delete(T entity) {
         em.remove(em.contains(entity) ? entity : em.merge(entity));
+        em.flush();
         return entity;
     }
 

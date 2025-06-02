@@ -2,6 +2,7 @@ package isel.sisinf.jpa.repositorys;
 import isel.sisinf.jpa.AbstractRepository;
 import isel.sisinf.model.Station;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.ParameterMode;
 import jakarta.persistence.StoredProcedureQuery;
 
 import java.math.BigDecimal;
@@ -15,14 +16,33 @@ public class RepositoryStation extends AbstractRepository<Station, Integer> {
     }
 
 
-    public Map<Station, BigDecimal> getOccupancy() {
-        String jpql = "SELECT s, FUNCTION('fx_dock_occupancy', s.id) FROM Station s";
+//    public Map<Station, BigDecimal> getOccupancy() {
+//        String jpql = "SELECT s, FUNCTION('fx_dock_occupancy', s.id) FROM Station s";
+//
+//        List<Object[]> results = em.createQuery(jpql, Object[].class).getResultList();
+//        Map<Station, BigDecimal> map = new HashMap<>();
+//        for (Object[] row : results) {
+//            Station station = (Station) row[0];
+//            BigDecimal occupancy = (BigDecimal) row[1];
+//            map.put(station, occupancy);
+//        }
+//
+//        return map;
+//    }
 
-        List<Object[]> results = em.createQuery(jpql, Object[].class).getResultList();
+
+    public Map<Station, BigDecimal> getOccupancy() {
+        List<Station> stations = em.createQuery("SELECT s FROM Station s", Station.class).getResultList();
         Map<Station, BigDecimal> map = new HashMap<>();
-        for (Object[] row : results) {
-            Station station = (Station) row[0];
-            BigDecimal occupancy = (BigDecimal) row[1];
+
+        for (Station station : stations) {
+            StoredProcedureQuery query = em.createNamedStoredProcedureQuery("FUNC");
+            query.setParameter(1, station.getId());
+
+
+            query.execute();
+
+            BigDecimal occupancy = (BigDecimal) query.getOutputParameterValue(2);
             map.put(station, occupancy);
         }
 

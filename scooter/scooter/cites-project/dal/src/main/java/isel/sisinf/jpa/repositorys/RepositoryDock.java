@@ -28,6 +28,15 @@ public class RepositoryDock extends AbstractRepository<Dock,Integer> {
             throw new IllegalArgumentException("Scooter not found");
         }
 
+        Long count = em.createQuery(
+                        "SELECT COUNT(d) FROM Dock d WHERE d.scooter = :scooter AND d.state = 'occupy'", Long.class)
+                .setParameter("scooter", scooter)
+                .getSingleResult();
+
+        if (count > 0) {
+            throw new IllegalStateException("Scooter is already placed in another dock");
+        }
+
         dock.setScooter(scooter);
         dock.setState("occupy");
     }

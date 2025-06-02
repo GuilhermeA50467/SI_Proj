@@ -231,6 +231,8 @@ class UI
 
             context.beginTransaction();
             context.getRepositoryDock().placeScooterInDock(dockAndScooterIds[0], dockAndScooterIds[1]);
+            System.out.println("are sleeping");
+            Thread.sleep(20000);
             context.commitTransaction();
 
             System.out.println("Scooter colocada com sucesso na doca " + dockAndScooterIds[0]);
@@ -261,7 +263,7 @@ class UI
     }
 }
 
-public class    App{
+public class        App{
 
     public static void main(String[] args) throws Exception{
         UI ui = UI.getInstance();

@@ -252,6 +252,7 @@ class UI
         System.out.println("Andre Nunes, nº51766");
         System.out.println("DAL version:"+ isel.sisinf.jpa.Dal.version());
         System.out.println("Core version:"+ isel.sisinf.model.Core.version());
+        System.out.println("JPA version:"+ "4.0.2");
     }
 
     public void closeResources() {

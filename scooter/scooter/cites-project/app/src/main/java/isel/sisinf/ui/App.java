@@ -24,10 +24,9 @@ SOFTWARE.
 package isel.sisinf.ui;
 
 
-
-import ServicesData.DataDock;
-import ServicesData.DataRider;
-import ServicesData.DataTravel;
+import serviceData.DataDock;
+import serviceData.DataRider;
+import serviceData.DataTravel;
 import isel.sisinf.jpa.jpaContext;
 import isel.sisinf.jpa.repositorys.RepositoryRider;
 import isel.sisinf.jpa.repositorys.RepositoryStation;

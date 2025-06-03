@@ -1,9 +1,8 @@
-package ServicesData;
+package serviceData;
 
 import java.util.Scanner;
 
 public class DataDock {
-
     private static String inputData(String str, boolean show) {
         Scanner key = new Scanner(System.in);
         if (show) System.out.print("Enter corresponding values, separated by commas of:\n");

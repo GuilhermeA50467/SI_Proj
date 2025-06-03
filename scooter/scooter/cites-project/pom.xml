@@ -25,6 +25,7 @@
     <module>dal</module>
     <module>model</module>
     <module>app</module>
+      <module>services</module>
   </modules>
   <build>
     <pluginManagement>

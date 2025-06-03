@@ -1,4 +1,4 @@
-package ServicesData;
+package serviceData;
 
 import isel.sisinf.model.Rider;
 

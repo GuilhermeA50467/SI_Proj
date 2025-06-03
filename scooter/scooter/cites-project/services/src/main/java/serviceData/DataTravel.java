@@ -1,9 +1,8 @@
-package ServicesData;
+package serviceData;
 
 import java.util.Scanner;
 
 public class DataTravel {
-
     public static int[] readTripInput() {
         int dockid = Integer.parseInt(inputData("ID da doca de partida: ", false));
         int clientid = Integer.parseInt(inputData("ID do cliente: ", false));

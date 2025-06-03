@@ -11,6 +11,7 @@
         <class>isel.sisinf.model.ScooterModel</class>
         <class>isel.sisinf.model.Client</class>
         <class>isel.sisinf.model.Person</class>
+        <class>isel.sisinf.model.Travel</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
 
         <properties>

@@ -1,4 +1,4 @@
-package isel.sisinf.jpa.ServicesData;
+package ServicesData;
 
 import java.util.Scanner;
 

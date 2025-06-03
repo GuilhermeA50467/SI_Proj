@@ -23,8 +23,11 @@ SOFTWARE.
 */
 package isel.sisinf.ui;
 
-import isel.sisinf.jpa.ServicesData.DataDock;
-import isel.sisinf.jpa.ServicesData.DataTravel;
+
+
+import ServicesData.DataDock;
+import ServicesData.DataRider;
+import ServicesData.DataTravel;
 import isel.sisinf.jpa.jpaContext;
 import isel.sisinf.jpa.repositorys.RepositoryRider;
 import isel.sisinf.jpa.repositorys.RepositoryStation;
@@ -33,10 +36,8 @@ import isel.sisinf.model.Station;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import isel.sisinf.jpa.ServicesData.DataRider;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.*;
 
 /**

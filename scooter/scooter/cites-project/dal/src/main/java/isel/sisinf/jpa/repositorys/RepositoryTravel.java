@@ -21,11 +21,10 @@ public class RepositoryTravel extends AbstractRepository<Travel, Integer> {
             throw new IllegalArgumentException("Cliente com ID " + clientId + " não existe");
         }
 
-        StoredProcedureQuery query = em.createNamedStoredProcedureQuery("startTripProcedure");
-        query.setParameter("dockid", dockId);
-        query.setParameter("clientid", clientId);
-        query.execute();
-
+        em.createNativeQuery("CALL startTrip(?, ?)")
+                .setParameter(1, dockId)
+                .setParameter(2, clientId)
+                .executeUpdate();
 
     }
 }
